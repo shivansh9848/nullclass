@@ -20,6 +20,9 @@ app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
+// Serve static files from uploads directory
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 app.use("/user", userroutes);
 app.use("/questions", questionroutes);
 app.use("/answer", answerroutes);
