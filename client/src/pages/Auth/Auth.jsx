@@ -10,6 +10,7 @@ const Auth = () => {
     const [name, setname] = useState("");
     const [email, setemail] = useState("");
     const [password, setpassword] = useState("")
+    const [phone, setphone] = useState("")
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const handlesubmit = (e) => {
@@ -21,7 +22,7 @@ const Auth = () => {
             if (!name) {
                 alert("Enter a name to continue")
             }
-            dispatch(signup({ name, email, password }, navigate))
+            dispatch(signup({ name, email, password, phone }, navigate))
 
         } else {
             dispatch(login({ email, password }, navigate))
@@ -33,6 +34,7 @@ const Auth = () => {
         setname("");
         setemail("");
         setpassword("")
+        setphone("")
 
     }
 
@@ -56,6 +58,26 @@ const Auth = () => {
                             setemail(e.target.value);
                         }} />
                     </label>
+                    {issignup && (
+                        <label htmlFor="phone">
+                            <h4>Phone Number (Optional)</h4>
+                            <input
+                                type="tel"
+                                id='phone'
+                                name='phone'
+                                value={phone}
+                                onChange={(e) => {
+                                    setphone(e.target.value);
+                                }}
+                                placeholder="Enter 10-digit phone number"
+                                maxLength="10"
+                                pattern="[6-9][0-9]{9}"
+                            />
+                            <small style={{ color: '#666', fontSize: '12px' }}>
+                                Phone number is required for SMS password reset
+                            </small>
+                        </label>
+                    )}
                     <label htmlFor="password">
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
                             <h4>Password</h4>

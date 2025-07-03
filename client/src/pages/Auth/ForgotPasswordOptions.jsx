@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Auth.css';
 
-const ForgotPassword = () => {
+const ForgotPasswordOptions = () => {
     const navigate = useNavigate();
 
     return (
@@ -49,4 +49,4 @@ const ForgotPassword = () => {
     );
 };
 
-export default ForgotPassword;
+export default ForgotPasswordOptions;

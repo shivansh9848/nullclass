@@ -4,6 +4,8 @@ import Home from './pages/Home/Home'
 import Askquestion from './pages/Askquestion/Askquestion'
 import Auth from './pages/Auth/Auth'
 import ForgotPassword from './pages/Auth/ForgotPassword'
+import ForgotPasswordEmail from './pages/Auth/ForgotPasswordEmail'
+import ForgotPasswordSMS from './pages/Auth/ForgotPasswordSMS'
 import ResetPassword from './pages/Auth/ResetPassword'
 import Question from './pages/Question/Question'
 import Displayquestion from './pages/Question/Displayquestion'
@@ -20,6 +22,8 @@ function Allroutes({ slidein, handleslidein }) {
             <Route path='/Askquestion' element={<Askquestion />} />
             <Route path='/Auth' element={<Auth />} />
             <Route path='/forgot-password' element={<ForgotPassword />} />
+            <Route path='/forgot-password-email' element={<ForgotPasswordEmail />} />
+            <Route path='/forgot-password-sms' element={<ForgotPasswordSMS />} />
             <Route path='/reset-password/:token' element={<ResetPassword />} />
             <Route path='/Question' element={<Question slidein={slidein} handleslidein={handleslidein} />} />
             <Route path='/Question/:id' element={<Displayquestion slidein={slidein} handleslidein={handleslidein} />} />
