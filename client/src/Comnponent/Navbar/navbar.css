@@ -12,17 +12,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  
-  .navbar {
+}
+
+.navbar {
     height: 100%;
     min-width: 85%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-  }
-  
-  .slide-in-icon {
+    padding: 0 10px;
+}
+
+.slide-in-icon {
     display: none;
     transition: 0.2s;
     padding: 5px 6px 3px 6px;
@@ -30,93 +31,193 @@
     background-color: inherit;
     border: none;
     cursor: pointer;
-  }
-  
-  .navbar .navbar-1 {
+}
+
+.navbar .navbar-1 {
     display: flex;
     align-items: center;
     flex-grow: 1;
-  }
-  
-  .navbar .navbar-2 {
+}
+
+.navbar .navbar-2 {
     display: flex;
     align-items: center;
-  }
-  
-  .nav-logo {
+    gap: 10px;
+}
+
+.nav-logo {
     padding: 5px 25px;
-  }
-  
-  .nav-item {
-    
+}
+
+.nav-logo img {
+    max-height: 40px;
+    width: auto;
+}
+
+.nav-item {
     margin: 0px 3px;
     font-size: small;
     font-weight: 500;
     text-decoration: none;
     color: rgb(69, 69, 69);
     transition: 0.2s;
-  }
-  
-  .nav-btn {
+}
+
+.nav-btn {
     cursor: pointer;
     border-radius: 20px;
     padding: 10px 20px;
-  }
-  
-  .nav-item:hover,
-  .slide-in-icon:hover {
+}
+
+.nav-item:hover,
+.slide-in-icon:hover {
     background-color: rgb(226, 226, 226);
-  }
-  
-  .navbar .navbar-1 form {
+}
+
+.navbar .navbar-1 form {
     flex-grow: 1;
     padding: 0px 12px;
     position: relative;
-    
-  }
-  
-  .navbar .navbar-1 form input {
-    width: 600px;
+    max-width: 600px;
+}
+
+.desktop-search {
+    flex-grow: 1;
+    padding: 0px 12px;
+    position: relative;
+    max-width: 600px;
+}
+
+.mobile-search-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.mobile-search-btn:hover {
+    background-color: rgb(226, 226, 226);
+}
+
+.navbar .navbar-1 form input,
+.desktop-search input {
+    width: 100%;
+    max-width: 600px;
     margin: 0;
     padding: 8px 10px 8px 32px;
     font-size: 13px;
     border: solid 1px #0000003e;
     border-radius: 3px;
-  }
-  
-  .navbar .navbar-1 form .search-icon {
+    box-sizing: border-box;
+}
+
+.navbar .navbar-1 form .search-icon,
+.desktop-search .search-icon {
     position: absolute;
     left: 25px;
     top: 8px;
-  }
-  
-  .nav-links {
+}
+
+.nav-links {
     padding: 7px 13px;
     border: solid 1px blue;
     border-radius: 3px;
     background-color: #e7f8fe;
     cursor: pointer;
-  }
-  
-  .nav-links:hover {
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.nav-links:hover {
     background-color: #d3e4eb;
-  }
-  
-  @media screen and (max-width: 1120px) {
-    .navbar .navbar-1 form {
-      display: none;
+}
+
+/* Tablet Styles */
+@media screen and (max-width: 1120px) {
+
+    .navbar .navbar-1 form,
+    .desktop-search {
+        display: none;
     }
-  }
-  
-  @media screen and (max-width: 760px) {
+
+    .mobile-search-btn {
+        display: block;
+    }
+
+    .navbar {
+        min-width: 95%;
+        padding: 0 5px;
+    }
+}
+
+@media screen and (max-width: 1020px) {
+    .nav-logo {
+        padding: 5px 15px;
+    }
+
+    .nav-btn {
+        padding: 8px 15px;
+        font-size: 12px;
+    }
+}
+
+/* Mobile Styles */
+@media screen and (max-width: 760px) {
     .slide-in-icon {
-      display: block;
+        display: block;
     }
-  }
-  
-  @media screen and (max-width: 620px) {
+
+    .navbar {
+        min-width: 100%;
+        padding: 0 8px;
+    }
+
+    .nav-logo {
+        padding: 5px 10px;
+    }
+
+    .nav-logo img {
+        max-height: 35px;
+    }
+
+    .navbar .navbar-2 {
+        gap: 5px;
+    }
+
+    .nav-links {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+}
+
+@media screen and (max-width: 620px) {
     .navbar .navbar-1 .res-nav {
-      display: none;
+        display: none;
     }
-  }
-  
+
+    .nav-logo {
+        padding: 5px 8px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .navbar {
+        padding: 0 5px;
+    }
+
+    .nav-logo img {
+        max-height: 30px;
+    }
+
+    .nav-links {
+        padding: 5px 8px;
+        font-size: 10px;
+    }
+
+    .slide-in-icon {
+        padding: 4px 5px 2px 5px;
+    }
+}

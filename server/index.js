@@ -5,18 +5,19 @@ import dotenv from "dotenv"
 import userroutes from "./routes/user.js"
 import questionroutes from "./routes/question.js"
 import answerroutes from "./routes/answer.js"
+import authroutes from "./routes/auth.js"
+
 const app = express();
 dotenv.config();
 app.use(express.json({ limit: "30mb", extended: true }))
 app.use(express.urlencoded({ limit: "30mb", extended: true }))
 app.use(cors());
 
-
-
-
 app.use("/user", userroutes);
 app.use('/questions', questionroutes)
-app.use('/answer',answerroutes)
+app.use('/answer', answerroutes)
+app.use('/api/auth', authroutes)
+
 app.get('/', (req, res) => {
     res.send("Codequest is running perfect")
 })
