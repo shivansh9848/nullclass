@@ -101,6 +101,316 @@
     margin-left: 5px;
 }
 
+/* Forgot Password specific styles */
+.auth-container {
+    min-height: 100vh;
+    margin: 0% auto;
+    background-color: #f1f2f3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.auth-box {
+    min-width: 400px;
+    max-width: 500px;
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 10px 25px rgb(0 0 0 / 5%), 0 20px 48px rgb(0 0 0 / 5%),
+        0 1px 4px rgb(0 0 0 / 10%);
+    box-sizing: border-box;
+}
+
+.auth-box h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 24px;
+}
+
+.auth-subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: solid 1px #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #009dff;
+    box-shadow: 0 0 0 2px rgba(0, 157, 255, 0.1);
+}
+
+.form-group input:disabled {
+    background-color: #f8f9fa;
+    color: #666;
+    cursor: not-allowed;
+}
+
+.password-generator-section {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.password-generator-section h4 {
+    margin: 0 0 8px 0;
+    color: #333;
+    font-size: 16px;
+}
+
+.generator-info {
+    margin: 0 0 15px 0;
+    color: #666;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.password-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.generate-btn {
+    padding: 8px 16px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.2s;
+    width: fit-content;
+}
+
+.generate-btn:hover:not(:disabled) {
+    background-color: #5a6268;
+}
+
+.generate-btn:disabled {
+    background-color: #adb5bd;
+    cursor: not-allowed;
+}
+
+.password-display {
+    padding: 10px;
+    background-color: #e7f3ff;
+    border-radius: 5px;
+    border: 1px solid #b3d9ff;
+    color: #0066cc;
+    font-size: 14px;
+    text-align: center;
+}
+
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid #f5c6cb;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid #c3e6cb;
+    margin: 10px 0;
+    font-size: 14px;
+    word-break: break-word;
+}
+
+.auth-switch {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+    font-size: 14px;
+}
+
+.auth-link {
+    color: #007ac6;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.auth-link:hover {
+    text-decoration: underline;
+}
+
+.forgot-password-notice {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 5px;
+}
+
+.notice-text {
+    margin: 0;
+    color: #856404;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+/* Password Reset specific styles */
+.password-reset-info {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #e7f3ff;
+    border-radius: 8px;
+    border: 1px solid #b3d9ff;
+}
+
+.password-reset-info h4 {
+    margin: 0 0 10px 0;
+    color: #0066cc;
+    font-size: 16px;
+}
+
+.info-steps {
+    margin: 0;
+}
+
+.info-steps p {
+    margin: 5px 0;
+    color: #333;
+    font-size: 14px;
+}
+
+.password-requirements {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.password-requirements h4 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 16px;
+}
+
+.password-requirements ul {
+    margin: 0;
+    padding: 0 0 0 20px;
+    list-style: none;
+}
+
+.password-requirements li {
+    margin: 5px 0;
+    font-size: 14px;
+    position: relative;
+}
+
+.password-requirements li:before {
+    content: "●";
+    position: absolute;
+    left: -15px;
+    font-size: 12px;
+}
+
+.password-requirements li.valid {
+    color: #28a745;
+}
+
+.password-requirements li.valid:before {
+    content: "✓";
+    color: #28a745;
+    font-weight: bold;
+}
+
+.password-requirements li.invalid {
+    color: #dc3545;
+}
+
+.password-requirements li.invalid:before {
+    content: "✗";
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.loading-spinner {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.loading-spinner p {
+    margin: 0;
+    color: #666;
+    font-size: 16px;
+}
+
+/* Enhanced success message for reset completion */
+.success-message.reset-complete {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #c3e6cb;
+    margin: 20px 0;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Email link styling */
+.email-link-preview {
+    margin: 15px 0;
+    padding: 15px;
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 5px;
+    word-break: break-all;
+}
+
+.email-link-preview p {
+    margin: 0 0 10px 0;
+    color: #856404;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.email-link-preview code {
+    background-color: #f8f9fa;
+    padding: 5px 8px;
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 12px;
+    color: #333;
+}
+
 /* Tablet styles */
 @media screen and (max-width: 1024px) {
     .auth-container-1 {
@@ -153,6 +463,34 @@
         padding: 14px 5px;
         font-size: 16px;
     }
+
+    .auth-container {
+        padding: 15px;
+        align-items: flex-start;
+        padding-top: 80px;
+    }
+
+    .auth-box {
+        min-width: 100%;
+        max-width: none;
+        padding: 25px 20px;
+    }
+
+    .auth-box h2 {
+        font-size: 22px;
+    }
+
+    .password-generator-section {
+        padding: 12px;
+    }
+
+    .password-preview {
+        align-items: center;
+    }
+
+    .generate-btn {
+        width: 100%;
+    }
 }
 
 @media screen and (max-width: 480px) {
@@ -183,5 +521,72 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 5px;
+    }
+
+    .auth-box {
+        padding: 20px 15px;
+    }
+
+    .auth-box h2 {
+        font-size: 20px;
+    }
+
+    .form-group input {
+        padding: 14px 10px;
+        font-size: 15px;
+    }
+
+    .auth-btn {
+        padding: 14px 5px;
+        font-size: 16px;
+    }
+
+    .password-generator-section {
+        padding: 10px;
+    }
+
+    .generator-info {
+        font-size: 12px;
+    }
+}
+
+/* Password Reset specific responsive styles */
+@media screen and (max-width: 768px) {
+    .password-reset-info {
+        padding: 12px;
+    }
+
+    .password-requirements {
+        padding: 12px;
+    }
+
+    .info-steps p {
+        font-size: 13px;
+    }
+
+    .password-requirements li {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .password-reset-info {
+        padding: 10px;
+    }
+
+    .password-requirements {
+        padding: 10px;
+    }
+
+    .info-steps p {
+        font-size: 12px;
+    }
+
+    .password-requirements li {
+        font-size: 12px;
+    }
+
+    .loading-spinner {
+        padding: 30px 15px;
     }
 }

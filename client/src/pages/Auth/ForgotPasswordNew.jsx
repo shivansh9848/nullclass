@@ -4,6 +4,7 @@ import './Auth.css';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -15,8 +16,8 @@ const ForgotPassword = () => {
         setSuccess('');
         setIsLoading(true);
 
-        if (!email) {
-            setError('Please provide your email address');
+        if (!email && !phone) {
+            setError('Please provide either email or phone number');
             setIsLoading(false);
             return;
         }
@@ -28,25 +29,27 @@ const ForgotPassword = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    email
+                    email,
+                    phone
                 }),
             });
 
             const data = await response.json();
 
             if (response.ok) {
-                setSuccess('✅ A new password has been sent to your email address. Please check your inbox and use the new password to log in.');
+                setSuccess('✅ Password reset link has been sent to your email/phone. Please check your inbox and click the link to reset your password.');
                 // Clear form
                 setEmail('');
-                // Redirect to login after 8 seconds
+                setPhone('');
+                // Redirect to login after 6 seconds
                 setTimeout(() => {
                     navigate('/Auth');
-                }, 8000);
+                }, 6000);
             } else {
                 if (data.message.includes('once per day')) {
-                    setError('⚠️ You can request password reset only once a day.');
+                    setError('⚠️ You can only request a password reset once per day. Please try again tomorrow.');
                 } else {
-                    setError(data.message || 'Failed to send new password');
+                    setError(data.message || 'Failed to send reset link');
                 }
             }
         } catch (err) {
@@ -60,7 +63,7 @@ const ForgotPassword = () => {
         <div className="auth-container">
             <div className="auth-box">
                 <h2>Reset Password</h2>
-                <p className="auth-subtitle">Enter your email to receive a new password</p>
+                <p className="auth-subtitle">Enter your email or phone number to receive a password reset link</p>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="email">Email:</label>
@@ -71,18 +74,27 @@ const ForgotPassword = () => {
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="Enter your email"
                             disabled={isLoading}
-                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="phone">Phone Number:</label>
+                        <input
+                            type="tel"
+                            id="phone"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            placeholder="Enter your phone number"
+                            disabled={isLoading}
                         />
                     </div>
 
                     <div className="password-reset-info">
                         <h4>🔐 How it works:</h4>
                         <div className="info-steps">
-                            <p>1. Enter your email address</p>
-                            <p>2. Click "Send New Password"</p>
-                            <p>3. Check your email for the new password</p>
-                            <p>4. Use the new password to log in</p>
-                            <p>5. Change your password after logging in</p>
+                            <p>1. Enter your email or phone number</p>
+                            <p>2. Click "Send Reset Link"</p>
+                            <p>3. Check your email/phone for the reset link</p>
+                            <p>4. Click the link to create a new password</p>
                         </div>
                     </div>
 
@@ -90,7 +102,7 @@ const ForgotPassword = () => {
                     {success && <div className="success-message">{success}</div>}
 
                     <button type="submit" disabled={isLoading} className="auth-btn">
-                        {isLoading ? 'Sending...' : 'Send New Password'}
+                        {isLoading ? 'Sending...' : 'Send Reset Link'}
                     </button>
                 </form>
                 <p className="auth-switch">
@@ -100,9 +112,7 @@ const ForgotPassword = () => {
                 <div className="forgot-password-notice">
                     <p className="notice-text">
                         <strong>Note:</strong> You can only request a password reset once per day.
-                        A new 10-character password will be sent to your email.
-                        <br />
-                        <strong>Important:</strong> Please change this password immediately after logging in.
+                        The reset link will expire in 1 hour for security.
                     </p>
                 </div>
             </div>

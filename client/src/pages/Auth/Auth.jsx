@@ -22,10 +22,10 @@ const Auth = () => {
                 alert("Enter a name to continue")
             }
             dispatch(signup({ name, email, password }, navigate))
-            
+
         } else {
             dispatch(login({ email, password }, navigate))
-        
+
         }
     }
     const handleswitch = () => {
@@ -60,7 +60,8 @@ const Auth = () => {
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
                             <h4>Password</h4>
                             {!issignup && (
-                                <p style={{ color: "#007ac6", fontSize: "13px" }}>
+                                <p style={{ color: "#007ac6", fontSize: "13px", cursor: "pointer" }}
+                                    onClick={() => navigate('/forgot-password')}>
                                     Forgot Password?
                                 </p>
                             )}
