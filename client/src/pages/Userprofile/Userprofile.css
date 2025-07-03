@@ -130,6 +130,60 @@
     background-color: #f0f8ff;
 }
 
+/* Updated styles for reward system */
+.user-details-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.user-meta p {
+    margin: 0;
+    color: #666;
+    font-size: 0.9em;
+}
+
+.user-points {
+    color: #ff6b35 !important;
+    font-weight: bold;
+    font-size: 1em !important;
+}
+
+.profile-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.transfer-points-btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #28a745;
+    color: white;
+}
+
+.transfer-points-btn:hover {
+    background: #218838;
+}
+
 /* Tablet styles */
 @media screen and (max-width: 1024px) {
     .user-details-container {
@@ -157,14 +211,12 @@
         margin-top: 30px;
         flex-direction: column;
         gap: 15px;
+        text-align: center;
     }
 
     .user-details {
         flex-direction: column;
-        align-items: center;
         text-align: center;
-        min-width: auto;
-        width: 100%;
     }
 
     .user-name {
@@ -201,6 +253,17 @@
         margin: 5px 0;
         padding: 14px;
         font-size: 16px;
+    }
+
+    .profile-actions {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .edit-profile-btn,
+    .transfer-points-btn {
+        flex: 1;
+        max-width: 200px;
     }
 }
 

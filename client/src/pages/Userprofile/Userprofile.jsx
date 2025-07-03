@@ -6,45 +6,82 @@ import { useSelector } from 'react-redux'
 import Avatar from '../../Comnponent/Avatar/Avatar'
 import Editprofileform from './Edirprofileform'
 import Profilebio from './Profilebio'
+import PointsTransfer from '../../Comnponent/PointsTransfer/PointsTransfer'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBirthdayCake, faPen } from '@fortawesome/free-solid-svg-icons'
-const Userprofile = ({ slidein }) => {
-  const { id } = useParams()
-  const [Switch, setswitch] = useState(false);
+import { faBirthdayCake, faPen, faCoins } from '@fortawesome/free-solid-svg-icons'
+import './Userprofile.css'
 
-  const users = useSelector((state)=>state.usersreducer)
-  const currentprofile = users.filter((user) => user._id === id)[0]
-  const currentuser = useSelector((state)=>state.currentuserreducer)
-  // console.log(currentuser._id)
-  return (
-    <div className="home-container-1">
-      <Leftsidebar slidein={slidein} />
-      <div className="home-container-2">
-        <section>
-          <div className="user-details-container">
-            <div className="user-details">
-              <Avatar backgroundColor="purple" color="white" fontSize="50px" px="40px" py="30px">{currentprofile.name.charAt(0).toUpperCase()}</Avatar>
-              <div className="user-name">
-                <h1>{currentprofile?.name}</h1>
-                <p>
-                  <FontAwesomeIcon icon={faBirthdayCake} /> Joined{" "} {moment(currentprofile?.joinedon).fromNow()}
-                </p>
-              </div>
+const Userprofile = ({ slidein }) => {
+    const { id } = useParams()
+    const [Switch, setswitch] = useState(false);
+    const [showPointsTransfer, setShowPointsTransfer] = useState(false);
+
+    const users = useSelector((state) => state.usersreducer.users || [])
+    const currentprofile = users.filter((user) => user._id === id)[0]
+    const currentuser = useSelector((state) => state.currentuserreducer)
+
+    return (
+        <div className="home-container-1">
+            <Leftsidebar slidein={slidein} />
+            <div className="home-container-2">
+                <section>
+                    <div className="user-details-container">
+                        <div className="user-details">
+                            <Avatar backgroundColor="purple" color="white" fontSize="50px" px="40px" py="30px">
+                                {currentprofile?.name?.charAt(0).toUpperCase()}
+                            </Avatar>
+                            <div className="user-name">
+                                <h1>{currentprofile?.name}</h1>
+                                <div className="user-meta">
+                                    <p>
+                                        <FontAwesomeIcon icon={faBirthdayCake} /> Joined{" "}
+                                        {moment(currentprofile?.joinedon).fromNow()}
+                                    </p>
+                                    <p className="user-points">
+                                        <FontAwesomeIcon icon={faCoins} /> {currentprofile?.points || 0} Points
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="profile-actions">
+                            {currentuser?.result?._id === id && (
+                                <button
+                                    className="edit-profile-btn"
+                                    type='button'
+                                    onClick={() => setswitch(true)}
+                                >
+                                    <FontAwesomeIcon icon={faPen} /> Edit Profile
+                                </button>
+                            )}
+                            {currentuser?.result?._id !== id && currentuser?.result && (
+                                <button
+                                    className="transfer-points-btn"
+                                    type='button'
+                                    onClick={() => setShowPointsTransfer(true)}
+                                >
+                                    <FontAwesomeIcon icon={faCoins} /> Transfer Points
+                                </button>
+                            )}
+                        </div>
+                    </div>
+                    <>
+                        {Switch ? (
+                            <Editprofileform currentuser={currentuser} setswitch={setswitch} />
+                        ) : (
+                            <Profilebio currentprofile={currentprofile} />
+                        )}
+                    </>
+                </section>
             </div>
-            {currentuser?.result?._id === id && ( 
-              <button className="edit-profile-btn" type='button' onClick={() => setswitch(true)}><FontAwesomeIcon icon={faPen} /> Edit Profile</button>
+
+            {showPointsTransfer && (
+                <PointsTransfer
+                    currentUser={currentuser?.result}
+                    onClose={() => setShowPointsTransfer(false)}
+                />
             )}
-          </div>
-          <>
-            {Switch ? (
-              <Editprofileform currentuser={currentuser} setswitch={setswitch} />
-            ) : (
-              <Profilebio currentprofile={currentprofile} />
-            )}
-          </>
-        </section>
-      </div></div>
-  )
+        </div>
+    )
 }
 
 export default Userprofile

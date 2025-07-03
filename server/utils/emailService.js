@@ -229,3 +229,97 @@ export const validateEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
+
+// Send OTP email for video upload verification
+export const sendOTPEmail = async (email, otp) => {
+  try {
+    if (!validateEmail(email)) {
+      throw new Error("Invalid email address");
+    }
+
+    const transporter = createTransporter();
+
+    const mailOptions = {
+      from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
+      to: email,
+      subject: "Video Upload Verification - stackoverflow",
+      html: `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+            .header { background-color: #007ac6; color: white; padding: 20px; text-align: center; }
+            .content { padding: 20px; background-color: #f9f9f9; }
+            .otp-box { background-color: #fff; border: 2px solid #007ac6; padding: 20px; margin: 20px 0; text-align: center; border-radius: 8px; }
+            .otp { font-size: 32px; font-weight: bold; color: #007ac6; letter-spacing: 5px; font-family: 'Courier New', monospace; }
+            .warning { background-color: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 5px; margin: 15px 0; }
+            .footer { padding: 20px; text-align: center; font-size: 12px; color: #666; }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <div class="header">
+              <h1>Video Upload Verification</h1>
+            </div>
+            <div class="content">
+              <h2>Hello!</h2>
+              <p>You have requested to upload a video with your question. Please use the OTP below to verify your email address:</p>
+              
+              <div class="otp-box">
+                <p style="margin: 0 0 10px 0; font-size: 14px; color: #666;">Your Verification Code:</p>
+                <div class="otp">${otp}</div>
+              </div>
+              
+              <div class="warning">
+                <p><strong>Important:</strong></p>
+                <ul>
+                  <li>This OTP is valid for 10 minutes only</li>
+                  <li>Do not share this code with anyone</li>
+                  <li>Video uploads are only allowed between 2:00 PM and 7:00 PM</li>
+                  <li>Video should not exceed 2 minutes duration and 50MB size</li>
+                </ul>
+              </div>
+              
+              <p>If you didn't request this verification, please ignore this email.</p>
+            </div>
+            <div class="footer">
+              <p>&copy; 2025 stackoverflow. All rights reserved.</p>
+              <p>This is an automated email, please do not reply.</p>
+            </div>
+          </div>
+        </body>
+        </html>
+      `,
+    };
+
+    // Check if email configuration is available
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
+      console.log(`
+========= OTP EMAIL (DEVELOPMENT MODE) =========
+To: ${email}
+Subject: Video Upload Verification - stackoverflow
+OTP: ${otp}
+
+Note: Email configuration not found. In production, configure:
+- EMAIL_USER: Your Gmail address
+- EMAIL_PASSWORD: Your Gmail app password
+- EMAIL_FROM: Sender email address
+==========================================================
+      `);
+      return {
+        success: true,
+        message: "OTP sent successfully (development mode)",
+      };
+    }
+
+    await transporter.sendMail(mailOptions);
+    console.log(`OTP email sent to: ${email}`);
+
+    return { success: true, message: "OTP sent successfully" };
+  } catch (error) {
+    console.error("OTP email sending error:", error);
+    return { success: false, message: "Failed to send OTP email" };
+  }
+};

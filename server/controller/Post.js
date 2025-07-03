@@ -1,7 +1,7 @@
 import Post from "../models/Post.js";
 import Friend from "../models/Friend.js";
 import mongoose from "mongoose";
-import { cloudinary } from "../config/cloudinary.js";
+import cloudinary from "../config/cloudinary.js";
 
 // Get posting limits based on friends count
 const getPostingLimits = async (userId) => {

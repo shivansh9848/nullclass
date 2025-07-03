@@ -23,9 +23,15 @@ const Question = ({ question }) => {
                         : question.questiontitle
                     }
                 </Link>
+                {question.videoUrl && (
+                    <div className="question-video-indicator">
+                        <span className="video-icon">🎥</span>
+                        <span className="video-text">Video included</span>
+                    </div>
+                )}
                 <div className="display-tags-time">
                     <div className="display-tags">
-                        {question.questiontags.map((tag)=>(
+                        {question.questiontags.map((tag) => (
                             <p key={tag}> {tag}</p>
                         ))}
                     </div>

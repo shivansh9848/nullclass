@@ -10,6 +10,7 @@ import answerroutes from "./routes/answer.js";
 import authroutes from "./routes/auth.js";
 import postroutes from "./routes/post.js";
 import friendroutes from "./routes/friend.js";
+import otproutes from "./routes/otp.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,6 +27,7 @@ app.use("/answer", answerroutes);
 app.use("/api/auth", authroutes);
 app.use("/api/posts", postroutes);
 app.use("/api/friends", friendroutes);
+app.use("/api", otproutes);
 
 app.get("/", (req, res) => {
   res.send("Codequest is running perfect");

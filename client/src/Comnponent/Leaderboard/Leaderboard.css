@@ -1,0 +1,176 @@
+.leaderboard-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.leaderboard-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.leaderboard-header h2 {
+    color: #333;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.leaderboard-header p {
+    color: #666;
+    font-size: 1.1em;
+}
+
+.leaderboard-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.leaderboard-item {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.leaderboard-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.leaderboard-item.rank-1 {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    box-shadow: 0 3px 15px rgba(255, 215, 0, 0.3);
+}
+
+.leaderboard-item.rank-2 {
+    background: linear-gradient(135deg, #c0c0c0, #e6e6e6);
+    box-shadow: 0 3px 15px rgba(192, 192, 192, 0.3);
+}
+
+.leaderboard-item.rank-3 {
+    background: linear-gradient(135deg, #cd7f32, #d4af37);
+    box-shadow: 0 3px 15px rgba(205, 127, 50, 0.3);
+}
+
+.rank-badge {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-right: 15px;
+    min-width: 50px;
+    text-align: center;
+}
+
+.rank-1 .rank-badge,
+.rank-2 .rank-badge,
+.rank-3 .rank-badge {
+    font-size: 2em;
+}
+
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #007bff;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-right: 15px;
+}
+
+.user-details {
+    flex: 1;
+}
+
+.user-name {
+    margin: 0 0 5px 0;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.user-stats {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.points {
+    font-weight: bold;
+    color: #ff6b35;
+    font-size: 1.1em;
+}
+
+.badges-count {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.user-badges {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.badge-icon {
+    font-size: 1.2em;
+    padding: 2px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.more-badges {
+    font-size: 0.8em;
+    color: #666;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 2px 6px;
+    border-radius: 10px;
+}
+
+.no-data {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+}
+
+@media (max-width: 768px) {
+    .leaderboard-container {
+        padding: 15px;
+    }
+
+    .leaderboard-item {
+        padding: 15px;
+    }
+
+    .rank-badge {
+        margin-right: 10px;
+        min-width: 40px;
+    }
+
+    .user-avatar {
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+        font-size: 1em;
+    }
+
+    .user-name {
+        font-size: 1.1em;
+    }
+
+    .user-stats {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .user-badges {
+        flex-direction: column;
+        gap: 2px;
+    }
+}

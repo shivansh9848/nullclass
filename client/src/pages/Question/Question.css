@@ -170,6 +170,61 @@
     word-wrap: break-word;
 }
 
+/* Video styles */
+.question-video-container {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.question-video-container h4 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 16px;
+}
+
+.question-video {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.question-video-indicator {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 8px 0;
+    padding: 4px 8px;
+    background-color: #e3f2fd;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #1976d2;
+    width: fit-content;
+}
+
+.video-icon {
+    font-size: 14px;
+}
+
+.video-text {
+    font-weight: 500;
+}
+
+/* Responsive video */
+@media (max-width: 768px) {
+    .question-video-container {
+        padding: 10px;
+    }
+
+    .question-video {
+        max-width: 100%;
+    }
+}
+
 /* Tablet styles */
 @media screen and (max-width: 1280px) {
     .question-details-page {

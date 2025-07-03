@@ -1,3 +1,7 @@
+/* Import video upload styles */
+@import '../../Comnponent/VideoUpload/VideoUpload.css';
+@import '../../Comnponent/OTPVerification/OTPVerification.css';
+
 .ask-question {
     min-height: 80vh;
     background-color: #f1f2f3;
@@ -68,6 +72,33 @@
 
 .review-btn:hover {
     background-color: #0086d8;
+}
+
+/* Time restriction warning */
+.time-restriction-warning {
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 4px;
+    padding: 15px;
+    margin: 15px 0;
+    color: #856404;
+}
+
+.time-restriction-warning h5 {
+    margin: 0 0 10px 0;
+    color: #856404;
+}
+
+.time-restriction-warning p {
+    margin: 0;
+    color: #856404 !important;
+}
+
+/* Disabled submit button */
+.review-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
 }
 
 /* Tablet styles */

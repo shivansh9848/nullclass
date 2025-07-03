@@ -110,6 +110,28 @@
     white-space: nowrap;
 }
 
+/* Video indicator styles */
+.question-video-indicator {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 8px 0;
+    padding: 4px 8px;
+    background-color: #e3f2fd;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #1976d2;
+    width: fit-content;
+}
+
+.video-icon {
+    font-size: 14px;
+}
+
+.video-text {
+    font-weight: 500;
+}
+
 /* Tablet styles */
 @media screen and (max-width: 1280px) {
     .main-bar {
