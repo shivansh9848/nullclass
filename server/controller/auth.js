@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 import {
   sendNewPasswordEmail,
   validateEmail,
-  validatePhone,
   generateRandomPassword,
 } from "../utils/emailService.js";
 
@@ -65,39 +64,28 @@ export const login = async (req, res) => {
 };
 
 export const forgotPassword = async (req, res) => {
-  const { email, phone } = req.body;
+  const { email } = req.body;
 
   try {
     // Validate input
-    if (!email && !phone) {
+    if (!email) {
       return res
         .status(400)
-        .json({ message: "Please provide either email or phone number" });
+        .json({ message: "Please provide your email address" });
     }
 
-    if (email && !validateEmail(email)) {
+    if (!validateEmail(email)) {
       return res
         .status(400)
         .json({ message: "Please provide a valid email address" });
     }
 
-    if (phone && !validatePhone(phone)) {
-      return res
-        .status(400)
-        .json({ message: "Please provide a valid phone number" });
-    }
-
-    // Find user by email or phone
-    let user = null;
-    if (email) {
-      user = await users.findOne({ email });
-    } else if (phone) {
-      user = await users.findOne({ phone });
-    }
+    // Find user by email
+    const user = await users.findOne({ email });
 
     if (!user) {
       return res.status(404).json({
-        message: "User not found with the provided email or phone number",
+        message: "User not found with the provided email address",
       });
     }
 
@@ -131,14 +119,7 @@ export const forgotPassword = async (req, res) => {
     await user.save();
 
     // Send new password to user's email
-    let notificationResult;
-    if (user.email) {
-      notificationResult = await sendNewPasswordEmail(user.email, newPassword);
-    } else {
-      return res.status(400).json({
-        message: "User email not found. Cannot send new password.",
-      });
-    }
+    const notificationResult = await sendNewPasswordEmail(user.email, newPassword);
 
     if (notificationResult.success) {
       res.status(200).json({

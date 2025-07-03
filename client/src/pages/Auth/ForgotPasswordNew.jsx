@@ -4,7 +4,6 @@ import './Auth.css';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -16,8 +15,8 @@ const ForgotPassword = () => {
         setSuccess('');
         setIsLoading(true);
 
-        if (!email && !phone) {
-            setError('Please provide either email or phone number');
+        if (!email) {
+            setError('Please provide your email address');
             setIsLoading(false);
             return;
         }
@@ -29,18 +28,16 @@ const ForgotPassword = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    email,
-                    phone
+                    email
                 }),
             });
 
             const data = await response.json();
 
             if (response.ok) {
-                setSuccess('✅ Password reset link has been sent to your email/phone. Please check your inbox and click the link to reset your password.');
+                setSuccess('✅ Password reset link has been sent to your email. Please check your inbox and click the link to reset your password.');
                 // Clear form
                 setEmail('');
-                setPhone('');
                 // Redirect to login after 6 seconds
                 setTimeout(() => {
                     navigate('/Auth');
@@ -63,7 +60,7 @@ const ForgotPassword = () => {
         <div className="auth-container">
             <div className="auth-box">
                 <h2>Reset Password</h2>
-                <p className="auth-subtitle">Enter your email or phone number to receive a password reset link</p>
+                <p className="auth-subtitle">Enter your email to receive a password reset link</p>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="email">Email:</label>
@@ -74,26 +71,16 @@ const ForgotPassword = () => {
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="Enter your email"
                             disabled={isLoading}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="phone">Phone Number:</label>
-                        <input
-                            type="tel"
-                            id="phone"
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                            placeholder="Enter your phone number"
-                            disabled={isLoading}
+                            required
                         />
                     </div>
 
                     <div className="password-reset-info">
                         <h4>🔐 How it works:</h4>
                         <div className="info-steps">
-                            <p>1. Enter your email or phone number</p>
+                            <p>1. Enter your email address</p>
                             <p>2. Click "Send Reset Link"</p>
-                            <p>3. Check your email/phone for the reset link</p>
+                            <p>3. Check your email for the reset link</p>
                             <p>4. Click the link to create a new password</p>
                         </div>
                     </div>

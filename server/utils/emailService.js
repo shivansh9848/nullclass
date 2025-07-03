@@ -224,35 +224,8 @@ Note: Email configuration not found. In production, configure:
   }
 };
 
-// Send password reset SMS (placeholder)
-export const sendPasswordResetSMS = async (phone, resetToken) => {
-  try {
-    const resetLink = `${
-      process.env.CLIENT_URL || "http://localhost:3000"
-    }/reset-password/${resetToken}`;
-
-    console.log(`
-========= PASSWORD RESET SMS =========
-To: ${phone}
-Message: Your stackoverflow password reset link: ${resetLink}
-This link expires in 1 hour.
-=====================================
-    `);
-
-    return { success: true, message: "SMS sent successfully" };
-  } catch (error) {
-    console.error("SMS sending error:", error);
-    return { success: false, message: "Failed to send SMS" };
-  }
-};
-
-// Validation functions
+// Email validation function
 export const validateEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
-};
-
-export const validatePhone = (phone) => {
-  const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
-  return phoneRegex.test(phone);
 };

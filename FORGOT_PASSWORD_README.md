@@ -29,13 +29,12 @@ The forgot password feature allows users to request a new password when they for
 ## API Endpoints
 
 ### POST /api/auth/forgot-password
-Request a new password via email or phone.
+Request a new password via email.
 
 **Request Body:**
 ```json
 {
-  "email": "user@example.com",
-  "phone": "+1234567890"  // Optional, either email or phone required
+  "email": "user@example.com"
 }
 ```
 
@@ -57,7 +56,7 @@ Request a new password via email or phone.
 **Error Response (404) - User Not Found:**
 ```json
 {
-  "message": "User not found with the provided email or phone number"
+  "message": "User not found with the provided email address"
 }
 ```
 
@@ -98,7 +97,6 @@ The User model includes these fields for password reset functionality:
 {
   email: { type: String, required: true },
   password: { type: String, required: true },
-  phone: { type: String },
   lastPasswordResetRequest: { type: Date },  // Tracks when last reset was requested
   resetPasswordToken: { type: String },      // For other reset methods
   resetPasswordExpires: { type: Date },      // For other reset methods
@@ -123,9 +121,9 @@ The User model includes these fields for password reset functionality:
 
 ## Usage Flow
 
-1. **User Request:** User enters email/phone on forgot password page
+1. **User Request:** User enters email on forgot password page
 2. **Validation:** System validates input and checks rate limits
-3. **User Lookup:** System finds user by email or phone
+3. **User Lookup:** System finds user by email
 4. **Rate Check:** System checks if 24 hours have passed since last request
 5. **Password Generation:** System generates new 10-character password
 6. **Database Update:** New password is hashed and stored, timestamp updated
@@ -150,7 +148,7 @@ This will verify that:
 
 The implementation includes comprehensive error handling:
 
-- **Input Validation:** Validates email format and phone number format
+- **Input Validation:** Validates email format
 - **User Existence:** Checks if user exists in database
 - **Rate Limiting:** Enforces 24-hour cooldown period
 - **Email Sending:** Handles email delivery failures gracefully
@@ -181,7 +179,6 @@ The client-side forgot password component (`ForgotPassword.jsx`) automatically:
 ## Future Enhancements
 
 Potential improvements for future versions:
-- SMS support for phone number reset
 - Email verification before password reset
 - Admin dashboard for monitoring reset requests
 - Custom password complexity requirements
