@@ -119,7 +119,10 @@ export const forgotPassword = async (req, res) => {
     await user.save();
 
     // Send new password to user's email
-    const notificationResult = await sendNewPasswordEmail(user.email, newPassword);
+    const notificationResult = await sendNewPasswordEmail(
+      user.email,
+      newPassword
+    );
 
     if (notificationResult.success) {
       res.status(200).json({
