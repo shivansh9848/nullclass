@@ -1,5 +1,5 @@
 // Test script to verify API configuration
-import { getApiUrl, API_BASE_URL } from "./utils/apiConfig";
+import { getApiUrl, API_BASE_URL } from "./apiConfig";
 
 console.log("API Configuration Test");
 console.log("======================");
