@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "generate-dummy-data": "node generateDummyData.js"
+    "build": "echo 'No build step required for Node.js server'",
+    "test": "echo 'No tests specified'"
   },
   "keywords": [],
   "author": "",

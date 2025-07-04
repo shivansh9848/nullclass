@@ -32,9 +32,19 @@ app.use("/api/posts", postroutes);
 app.use("/api/friends", friendroutes);
 app.use("/api", otproutes);
 
-app.get("/", (req, res) => {
-  res.send("Codequest is running perfect");
-});
+// Serve static files from the React app build directory
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/build")));
+  
+  // Handle React routing, return all requests to React app
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+  });
+} else {
+  app.get("/", (req, res) => {
+    res.send("Codequest is running perfect");
+  });
+}
 
 const PORT = process.env.PORT || 5000;
 const database_url = process.env.MONGODB_URL;
