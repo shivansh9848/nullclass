@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getApiUrl } from '../../utils/apiConfig';
 import './Auth.css';
 
 const ForgotPasswordSMS = () => {
@@ -32,7 +33,7 @@ const ForgotPasswordSMS = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/api/auth/forgot-password-sms', {
+            const response = await fetch(getApiUrl('api/auth/forgot-password-sms'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -80,7 +81,7 @@ const ForgotPasswordSMS = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/api/auth/verify-otp-reset', {
+            const response = await fetch(getApiUrl('api/auth/verify-otp-reset'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

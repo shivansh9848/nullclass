@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import CreatePost from './CreatePost';
 import PostList from './PostList';
 import FriendsSidebar from './FriendsSidebar';
+import { getApiUrl } from '../../utils/apiConfig';
 import './PublicSpace.css';
 
 const PublicSpace = ({ slidein, handleslidein }) => {
@@ -25,7 +26,7 @@ const PublicSpace = ({ slidein, handleslidein }) => {
     const fetchPosts = async () => {
         try {
             setError(null);
-            const response = await fetch(`http://localhost:5000/api/posts?page=${page}&limit=10`);
+            const response = await fetch(getApiUrl(`api/posts?page=${page}&limit=10`));
             const data = await response.json();
 
             if (data && data.posts) {

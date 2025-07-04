@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getApiUrl } from '../../utils/apiConfig';
 import './OTPVerification.css';
 
 const OTPVerification = ({ email, onVerificationSuccess, onClose }) => {
@@ -18,7 +19,7 @@ const OTPVerification = ({ email, onVerificationSuccess, onClose }) => {
         setError('');
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/verify-otp`, {
+            const response = await fetch(getApiUrl('api/verify-otp'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -46,7 +47,7 @@ const OTPVerification = ({ email, onVerificationSuccess, onClose }) => {
         setError('');
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/send-otp`, {
+            const response = await fetch(getApiUrl('api/send-otp'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

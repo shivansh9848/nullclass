@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux"
 import { useTranslation } from 'react-i18next'
 import { askquestion } from '../../action/question'
+import { getApiUrl } from '../../utils/apiConfig'
 import VideoUpload from '../../Comnponent/VideoUpload/VideoUpload'
 import OTPVerification from '../../Comnponent/OTPVerification/OTPVerification'
 import TimeRestrictionWarning from '../../Comnponent/TimeRestrictionWarning/TimeRestrictionWarning'
@@ -36,7 +37,7 @@ const Askquestion = () => {
             setSelectedVideo(video);
             // Send OTP first
             try {
-                const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/send-otp`, {
+                const response = await fetch(getApiUrl('api/send-otp'), {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

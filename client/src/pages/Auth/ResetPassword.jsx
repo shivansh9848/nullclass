@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { getApiUrl } from '../../utils/apiConfig';
 import './Auth.css';
 
 const ResetPassword = () => {
@@ -21,7 +22,7 @@ const ResetPassword = () => {
             }
 
             try {
-                const response = await fetch(`http://localhost:5000/api/auth/verify-token/${token}`);
+                const response = await fetch(getApiUrl(`api/auth/verify-token/${token}`));
                 const data = await response.json();
 
                 if (response.ok && data.valid) {
@@ -63,7 +64,7 @@ const ResetPassword = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/api/auth/reset-password', {
+            const response = await fetch(getApiUrl('api/auth/reset-password'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

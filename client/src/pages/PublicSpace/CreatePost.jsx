@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { getApiUrl } from '../../utils/apiConfig';
 import './CreatePost.css';
 
 const CreatePost = ({ user, onPostCreated }) => {
@@ -18,7 +19,7 @@ const CreatePost = ({ user, onPostCreated }) => {
 
             if (!token) return;
 
-            const response = await fetch('http://localhost:5000/api/posts/status', {
+            const response = await fetch(getApiUrl('api/posts/status'), {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -89,7 +90,7 @@ const CreatePost = ({ user, onPostCreated }) => {
                 formData.append('media', file);
             });
 
-            const response = await fetch('http://localhost:5000/api/posts', {
+            const response = await fetch(getApiUrl('api/posts'), {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`

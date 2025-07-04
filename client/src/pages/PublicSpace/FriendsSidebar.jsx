@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { getApiUrl } from '../../utils/apiConfig';
 import './FriendsSidebar.css';
 
 const FriendsSidebar = ({ user }) => {
@@ -26,7 +27,7 @@ const FriendsSidebar = ({ user }) => {
     const fetchFriends = async () => {
         try {
             const token = getAuthToken();
-            const response = await fetch('http://localhost:5000/api/friends', {
+            const response = await fetch(getApiUrl('api/friends'), {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -44,7 +45,7 @@ const FriendsSidebar = ({ user }) => {
     const fetchPendingRequests = async () => {
         try {
             const token = getAuthToken();
-            const response = await fetch('http://localhost:5000/api/friends/pending', {
+            const response = await fetch(getApiUrl('api/friends/pending'), {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -62,7 +63,7 @@ const FriendsSidebar = ({ user }) => {
     const fetchSuggestions = async () => {
         try {
             const token = getAuthToken();
-            const response = await fetch('http://localhost:5000/api/friends/suggestions?limit=5', {
+            const response = await fetch(getApiUrl('api/friends/suggestions?limit=5'), {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -82,7 +83,7 @@ const FriendsSidebar = ({ user }) => {
     const fetchFriendsCount = async () => {
         try {
             const token = getAuthToken();
-            const response = await fetch('http://localhost:5000/api/friends/count', {
+            const response = await fetch(getApiUrl('api/friends/count'), {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -100,7 +101,7 @@ const FriendsSidebar = ({ user }) => {
     const sendFriendRequest = async (friendId) => {
         try {
             const token = getAuthToken();
-            const response = await fetch('http://localhost:5000/api/friends/request', {
+            const response = await fetch(getApiUrl('api/friends/request'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -125,7 +126,7 @@ const FriendsSidebar = ({ user }) => {
     const acceptFriendRequest = async (requestId) => {
         try {
             const token = getAuthToken();
-            const response = await fetch(`http://localhost:5000/api/friends/accept/${requestId}`, {
+            const response = await fetch(getApiUrl(`api/friends/accept/${requestId}`), {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -146,7 +147,7 @@ const FriendsSidebar = ({ user }) => {
     const rejectFriendRequest = async (requestId) => {
         try {
             const token = getAuthToken();
-            const response = await fetch(`http://localhost:5000/api/friends/reject/${requestId}`, {
+            const response = await fetch(getApiUrl(`api/friends/reject/${requestId}`), {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`

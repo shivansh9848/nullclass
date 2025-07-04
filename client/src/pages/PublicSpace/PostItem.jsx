@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import moment from 'moment';
+import { getApiUrl } from '../../utils/apiConfig';
 import './PostItem.css';
 
 const PostItem = ({ post, currentUser, onPostUpdate }) => {
@@ -41,7 +42,7 @@ const PostItem = ({ post, currentUser, onPostUpdate }) => {
 
         try {
             const token = getAuthToken();
-            const response = await fetch(`http://localhost:5000/api/posts/${safePost._id}/like`, {
+            const response = await fetch(getApiUrl(`api/posts/${safePost._id}/like`), {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -63,7 +64,7 @@ const PostItem = ({ post, currentUser, onPostUpdate }) => {
         setLoading(true);
         try {
             const token = getAuthToken();
-            const response = await fetch(`http://localhost:5000/api/posts/${safePost._id}/comment`, {
+            const response = await fetch(getApiUrl(`api/posts/${safePost._id}/comment`), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -88,7 +89,7 @@ const PostItem = ({ post, currentUser, onPostUpdate }) => {
 
         try {
             const token = getAuthToken();
-            const response = await fetch(`http://localhost:5000/api/posts/${safePost._id}/share`, {
+            const response = await fetch(getApiUrl(`api/posts/${safePost._id}/share`), {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`
