@@ -1,18 +1,25 @@
 // Middleware to check video upload time restrictions
 export const checkVideoUploadTime = (req, res, next) => {
-  // DISABLED FOR TESTING - Video uploads are now allowed at any time
-  console.log("Video upload time check: DISABLED (allowing all times)");
-  next();
+  const currentHour = new Date().getHours();
+  const currentTime = new Date().toLocaleTimeString();
 
-  // Original time restriction logic (commented out):
-  // const currentHour = new Date().getHours();
-  // if (currentHour >= 14 && currentHour < 19) {
-  //   next();
-  // } else {
-  //   return res.status(403).json({
-  //     message: "Video uploads are only allowed between 2:00 PM and 7:00 PM",
-  //   });
-  // }
+  console.log(
+    `Video upload time check: Current time is ${currentTime} (hour: ${currentHour})`
+  );
+
+  if (currentHour >= 14 && currentHour < 19) {
+    console.log(
+      "Video upload allowed - within permitted hours (2:00 PM - 7:00 PM)"
+    );
+    next();
+  } else {
+    console.log("Video upload blocked - outside permitted hours");
+    return res.status(403).json({
+      message: "Video uploads are only allowed between 2:00 PM and 7:00 PM",
+      currentTime: currentTime,
+      allowedHours: "2:00 PM - 7:00 PM",
+    });
+  }
 };
 
 // Store OTP tokens temporarily (in production, use Redis or database)

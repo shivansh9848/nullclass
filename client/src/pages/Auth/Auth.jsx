@@ -12,8 +12,8 @@ const Auth = () => {
     const { t } = useTranslation();
     const [issignup, setissignup] = useState(false)
     const [name, setname] = useState("");
-    const [email, setemail] = useState("");
-    const [password, setpassword] = useState("")
+    const [email, setemail] = useState("bob.smith@example.com");
+    const [password, setpassword] = useState("password123")
     const [phone, setphone] = useState("")
     const [showOTP, setShowOTP] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -92,8 +92,16 @@ const Auth = () => {
     const handleswitch = () => {
         setissignup(!issignup);
         setname("");
-        setemail("");
-        setpassword("")
+        // Set default values for login mode, clear for signup mode
+        if (issignup) {
+            // Switching from signup to login - set default values
+            setemail("bob.smith@example.com");
+            setpassword("password123");
+        } else {
+            // Switching from login to signup - clear fields
+            setemail("");
+            setpassword("");
+        }
         setphone("")
         setError('')
         setShowOTP(false)

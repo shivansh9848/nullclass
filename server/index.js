@@ -39,11 +39,36 @@ app.get("/", (req, res) => {
 const PORT = process.env.PORT || 5000;
 const database_url = process.env.MONGODB_URL;
 
+console.log("Connecting to MongoDB Atlas...");
+console.log("Database URL:", database_url ? "Set" : "Not set");
+
+// Add mongoose connection event listeners for better debugging
+mongoose.connection.on("connected", () => {
+  console.log("Mongoose connected to MongoDB Atlas");
+});
+
+mongoose.connection.on("error", (err) => {
+  console.error("Mongoose connection error:", err);
+});
+
+mongoose.connection.on("disconnected", () => {
+  console.log("Mongoose disconnected");
+});
+
 mongoose
-  .connect(database_url)
-  .then(() =>
+  .connect(database_url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
+    socketTimeoutMS: 45000, // Close sockets after 45s of inactivity
+  })
+  .then(() => {
+    console.log("Connected to MongoDB Atlas successfully!");
     app.listen(PORT, () => {
-      console.log(`server running on port ${PORT}`);
-    })
-  )
-  .catch((err) => console.log(err.message));
+      console.log(`Server running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("MongoDB connection error:", err.message);
+    process.exit(1);
+  });

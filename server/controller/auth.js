@@ -979,6 +979,12 @@ export const verifyLanguageOTP = async (req, res) => {
   const userId = req.userId;
 
   try {
+    console.log("Language OTP verification request:", {
+      otp,
+      language,
+      userId,
+    });
+
     if (!otp || !language) {
       return res.status(400).json({ message: "OTP and language are required" });
     }
@@ -989,17 +995,27 @@ export const verifyLanguageOTP = async (req, res) => {
 
     const user = await users.findById(userId);
     if (!user) {
+      console.log("User not found:", userId);
       return res.status(404).json({ message: "User not found" });
     }
 
+    console.log("User found:", {
+      email: user.email,
+      languageOTP: user.languageOTP ? "SET" : "NOT SET",
+      languageOTPExpires: user.languageOTPExpires,
+      languageOTPAttempts: user.languageOTPAttempts,
+    });
+
     // Check if OTP exists and is not expired
     if (!user.languageOTP || !user.languageOTPExpires) {
+      console.log("No OTP found for user");
       return res.status(400).json({
         message: "No OTP found. Please request a new OTP.",
       });
     }
 
     if (new Date() > user.languageOTPExpires) {
+      console.log("OTP expired");
       return res.status(400).json({
         message: "OTP has expired. Please request a new OTP.",
       });
@@ -1007,18 +1023,21 @@ export const verifyLanguageOTP = async (req, res) => {
 
     // Check attempt limits
     if (user.languageOTPAttempts >= 5) {
+      console.log("Too many attempts");
       return res.status(429).json({
         message: "Too many failed attempts. Please request a new OTP.",
       });
     }
 
     // Verify OTP
+    console.log("Comparing OTPs:", { provided: otp, stored: user.languageOTP });
     if (user.languageOTP !== otp) {
       // Increment failed attempts
       await users.findByIdAndUpdate(userId, {
         $inc: { languageOTPAttempts: 1 },
       });
 
+      console.log("Invalid OTP provided");
       return res.status(400).json({
         message: "Invalid OTP. Please try again.",
         attemptsLeft: 5 - (user.languageOTPAttempts + 1),
@@ -1044,6 +1063,7 @@ export const verifyLanguageOTP = async (req, res) => {
       lastLanguageOTPRequest: null,
     });
 
+    console.log("Language verification successful");
     res.status(200).json({
       message: "Language verification successful",
       verified: true,

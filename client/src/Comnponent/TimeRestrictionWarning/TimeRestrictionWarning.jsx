@@ -11,12 +11,8 @@ const TimeRestrictionWarning = () => {
     };
 
     const isVideoUploadAllowed = () => {
-        // DISABLED FOR TESTING - Video uploads are now allowed at any time
-        return true;
-
-        // Original time restriction logic (commented out):
-        // const currentHour = getCurrentTime();
-        // return currentHour >= 14 && currentHour < 19; // 2PM (14:00) to 7PM (19:00)
+        const currentHour = getCurrentTime();
+        return currentHour >= 14 && currentHour < 19; // 2PM (14:00) to 7PM (19:00)
     };
 
     const getTimeUntilAllowed = () => {

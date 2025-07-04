@@ -67,6 +67,12 @@ const LanguageSwitcher = () => {
             }
 
             const token = currentUser?.token;
+            if (!token) {
+                setError(t('auth.loginRequired'));
+                setLoading(false);
+                return;
+            }
+
             const endpoint = verificationType === 'email'
                 ? '/api/auth/send-language-email-otp'
                 : '/api/auth/send-language-sms-otp';
@@ -74,6 +80,8 @@ const LanguageSwitcher = () => {
             const body = verificationType === 'email'
                 ? { language: selectedLanguage }
                 : { language: selectedLanguage, phone: phoneNumber };
+
+            console.log('Sending OTP request:', { endpoint, body });
 
             const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}${endpoint}`, {
                 method: 'POST',
@@ -85,6 +93,7 @@ const LanguageSwitcher = () => {
             });
 
             const data = await response.json();
+            console.log('OTP response:', data);
 
             if (response.ok) {
                 if (data.verified) {
@@ -106,9 +115,11 @@ const LanguageSwitcher = () => {
                     setError(null);
                 }
             } else {
+                console.error('OTP send error:', data);
                 setError(data.message || t('errors.somethingWrong'));
             }
         } catch (err) {
+            console.error('OTP send network error:', err);
             setError(t('errors.somethingWrong'));
         } finally {
             setLoading(false);
@@ -121,14 +132,27 @@ const LanguageSwitcher = () => {
 
         try {
             const token = currentUser?.token;
-            const endpoint = verificationType === 'email'
-                ? '/api/auth/verify-language-email-otp'
-                : '/api/auth/verify-language-sms-otp';
+            if (!token) {
+                setError(t('auth.loginRequired'));
+                setLoading(false);
+                return;
+            }
+
+            if (!otp || otp.length !== 6) {
+                setError(t('language.otpRequired'));
+                setLoading(false);
+                return;
+            }
+
+            // Use the single verification endpoint for both email and SMS
+            const endpoint = '/api/auth/verify-language-otp';
 
             const body = {
                 language: selectedLanguage,
                 otp: otp
             };
+
+            console.log('Verifying OTP:', { endpoint, body });
 
             const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}${endpoint}`, {
                 method: 'POST',
@@ -140,6 +164,7 @@ const LanguageSwitcher = () => {
             });
 
             const data = await response.json();
+            console.log('OTP verification response:', data);
 
             if (response.ok) {
                 // Change language and close modal
@@ -160,9 +185,11 @@ const LanguageSwitcher = () => {
                     type: 'success'
                 });
             } else {
+                console.error('OTP verification error:', data);
                 setError(data.message || t('errors.somethingWrong'));
             }
         } catch (err) {
+            console.error('OTP verification network error:', err);
             setError(t('errors.somethingWrong'));
         } finally {
             setLoading(false);
