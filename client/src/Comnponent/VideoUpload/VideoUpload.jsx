@@ -1,7 +1,9 @@
 import React, { useState, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import './VideoUpload.css';
 
 const VideoUpload = ({ onVideoSelect, onRemoveVideo, selectedVideo }) => {
+    const { t } = useTranslation();
     const [dragActive, setDragActive] = useState(false);
     const [error, setError] = useState('');
     const [videoPreview, setVideoPreview] = useState(null);
@@ -10,13 +12,13 @@ const VideoUpload = ({ onVideoSelect, onRemoveVideo, selectedVideo }) => {
     const validateVideo = (file) => {
         // Check file type
         if (!file.type.startsWith('video/')) {
-            return 'Please select a valid video file.';
+            return t('videoUpload.invalidFile');
         }
 
         // Check file size (50MB = 50 * 1024 * 1024 bytes)
         const maxSize = 50 * 1024 * 1024;
         if (file.size > maxSize) {
-            return 'Video file size should not exceed 50MB.';
+            return t('videoUpload.fileTooLarge');
         }
 
         return null;
@@ -33,7 +35,7 @@ const VideoUpload = ({ onVideoSelect, onRemoveVideo, selectedVideo }) => {
 
                 // Check if duration is more than 2 minutes (120 seconds)
                 if (duration > 120) {
-                    resolve('Video duration should not exceed 2 minutes.');
+                    resolve(t('videoUpload.videoTooLong'));
                 } else {
                     resolve(null);
                 }
@@ -119,8 +121,8 @@ const VideoUpload = ({ onVideoSelect, onRemoveVideo, selectedVideo }) => {
 
     return (
         <div className="video-upload-container">
-            <h4>Video Upload (Optional)</h4>
-            <p>Upload a video to better explain your question (Max: 2 minutes, 50MB)</p>
+            <h4>{t('videoUpload.title')}</h4>
+            <p>{t('videoUpload.description')}</p>
 
             {!selectedVideo && !videoPreview ? (
                 <div
@@ -132,8 +134,8 @@ const VideoUpload = ({ onVideoSelect, onRemoveVideo, selectedVideo }) => {
                     onClick={() => fileInputRef.current?.click()}
                 >
                     <div className="upload-icon">📹</div>
-                    <p>Click to upload or drag and drop</p>
-                    <p className="upload-limits">MP4, MOV, AVI (max 50MB, 2 minutes)</p>
+                    <p>{t('videoUpload.clickToUpload')}</p>
+                    <p className="upload-limits">{t('videoUpload.fileTypes')}</p>
 
                     <input
                         ref={fileInputRef}
@@ -159,7 +161,7 @@ const VideoUpload = ({ onVideoSelect, onRemoveVideo, selectedVideo }) => {
                             onClick={handleRemoveVideo}
                             className="remove-video-btn"
                         >
-                            Remove Video
+                            {t('videoUpload.removeVideo')}
                         </button>
                     </div>
                 </div>

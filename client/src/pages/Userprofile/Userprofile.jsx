@@ -1,18 +1,21 @@
 import React, { useState } from 'react'
 import Leftsidebar from '../../Comnponent/Leftsidebar/Leftsidebar'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import moment from 'moment'
 import { useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 import Avatar from '../../Comnponent/Avatar/Avatar'
 import Editprofileform from './Edirprofileform'
 import Profilebio from './Profilebio'
 import PointsTransfer from '../../Comnponent/PointsTransfer/PointsTransfer'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBirthdayCake, faPen, faCoins } from '@fortawesome/free-solid-svg-icons'
+import { faBirthdayCake, faPen, faCoins, faHistory } from '@fortawesome/free-solid-svg-icons'
 import './Userprofile.css'
 
 const Userprofile = ({ slidein }) => {
+    const { t } = useTranslation();
     const { id } = useParams()
+    const navigate = useNavigate()
     const [Switch, setswitch] = useState(false);
     const [showPointsTransfer, setShowPointsTransfer] = useState(false);
 
@@ -34,24 +37,33 @@ const Userprofile = ({ slidein }) => {
                                 <h1>{currentprofile?.name}</h1>
                                 <div className="user-meta">
                                     <p>
-                                        <FontAwesomeIcon icon={faBirthdayCake} /> Joined{" "}
+                                        <FontAwesomeIcon icon={faBirthdayCake} /> {t('profile.joined')}{" "}
                                         {moment(currentprofile?.joinedon).fromNow()}
                                     </p>
                                     <p className="user-points">
-                                        <FontAwesomeIcon icon={faCoins} /> {currentprofile?.points || 0} Points
+                                        <FontAwesomeIcon icon={faCoins} /> {currentprofile?.points || 0} {t('profile.points')}
                                     </p>
                                 </div>
                             </div>
                         </div>
                         <div className="profile-actions">
                             {currentuser?.result?._id === id && (
-                                <button
-                                    className="edit-profile-btn"
-                                    type='button'
-                                    onClick={() => setswitch(true)}
-                                >
-                                    <FontAwesomeIcon icon={faPen} /> Edit Profile
-                                </button>
+                                <>
+                                    <button
+                                        className="edit-profile-btn"
+                                        type='button'
+                                        onClick={() => setswitch(true)}
+                                    >
+                                        <FontAwesomeIcon icon={faPen} /> {t('profile.editProfile')}
+                                    </button>
+                                    <button
+                                        className="login-history-btn"
+                                        type='button'
+                                        onClick={() => navigate('/login-history')}
+                                    >
+                                        <FontAwesomeIcon icon={faHistory} /> {t('profile.loginHistory')}
+                                    </button>
+                                </>
                             )}
                             {currentuser?.result?._id !== id && currentuser?.result && (
                                 <button
@@ -59,7 +71,7 @@ const Userprofile = ({ slidein }) => {
                                     type='button'
                                     onClick={() => setShowPointsTransfer(true)}
                                 >
-                                    <FontAwesomeIcon icon={faCoins} /> Transfer Points
+                                    <FontAwesomeIcon icon={faCoins} /> {t('profile.transferPoints')}
                                 </button>
                             )}
                         </div>

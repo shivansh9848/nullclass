@@ -1,6 +1,9 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const TimeRestrictionWarning = () => {
+    const { t } = useTranslation();
+
     const getCurrentTime = () => {
         const now = new Date();
         const hours = now.getHours();
@@ -20,12 +23,12 @@ const TimeRestrictionWarning = () => {
             // Before 2PM
             const hoursUntil = 14 - currentHour;
             const minutesUntil = 60 - now.getMinutes();
-            return `${hoursUntil - 1} hours and ${minutesUntil} minutes`;
+            return `${hoursUntil - 1} ${t('timeRestriction.hours')} ${t('timeRestriction.and')} ${minutesUntil} ${t('timeRestriction.minutes')}`;
         } else if (currentHour >= 19) {
             // After 7PM
             const hoursUntil = 24 - currentHour + 14;
             const minutesUntil = 60 - now.getMinutes();
-            return `${hoursUntil - 1} hours and ${minutesUntil} minutes`;
+            return `${hoursUntil - 1} ${t('timeRestriction.hours')} ${t('timeRestriction.and')} ${minutesUntil} ${t('timeRestriction.minutes')}`;
         }
         return '';
     };
@@ -37,7 +40,7 @@ const TimeRestrictionWarning = () => {
         if (currentHour >= 14 && currentHour < 19) {
             const hoursUntil = 19 - currentHour;
             const minutesUntil = 60 - now.getMinutes();
-            return `${hoursUntil - 1} hours and ${minutesUntil} minutes`;
+            return `${hoursUntil - 1} ${t('timeRestriction.hours')} ${t('timeRestriction.and')} ${minutesUntil} ${t('timeRestriction.minutes')}`;
         }
         return '';
     };
@@ -45,12 +48,12 @@ const TimeRestrictionWarning = () => {
     if (!isVideoUploadAllowed()) {
         return (
             <div className="time-restriction-warning">
-                <h5>⏰ Video Upload Not Available</h5>
+                <h5>⏰ {t('timeRestriction.videoNotAvailable')}</h5>
                 <p>
-                    Video uploads are only allowed between 2:00 PM and 7:00 PM daily.
+                    {t('timeRestriction.videoUploadTime')}
                 </p>
                 <p>
-                    <strong>Next available in:</strong> {getTimeUntilAllowed()}
+                    <strong>{t('timeRestriction.nextAvailable')}:</strong> {getTimeUntilAllowed()}
                 </p>
             </div>
         );
@@ -58,12 +61,12 @@ const TimeRestrictionWarning = () => {
 
     return (
         <div className="time-restriction-warning" style={{ backgroundColor: '#d4edda', borderColor: '#c3e6cb', color: '#155724' }}>
-            <h5 style={{ color: '#155724' }}>✅ Video Upload Available</h5>
+            <h5 style={{ color: '#155724' }}>✅ {t('timeRestriction.videoAvailable')}</h5>
             <p style={{ color: '#155724' }}>
-                Video uploads are currently allowed until 7:00 PM.
+                {t('timeRestriction.videoCurrentlyAllowed')}
             </p>
             <p style={{ color: '#155724' }}>
-                <strong>Time remaining:</strong> {getTimeUntilRestricted()}
+                <strong>{t('timeRestriction.timeRemaining')}:</strong> {getTimeUntilRestricted()}
             </p>
         </div>
     );

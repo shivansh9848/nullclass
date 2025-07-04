@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { transferPoints, searchUsers } from '../../action/users';
 import './PointsTransfer.css';
 
 const PointsTransfer = ({ currentUser, onClose }) => {
+    const { t } = useTranslation();
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedUser, setSelectedUser] = useState(null);
     const [pointsToTransfer, setPointsToTransfer] = useState('');
@@ -26,27 +28,27 @@ const PointsTransfer = ({ currentUser, onClose }) => {
 
     const handleTransfer = async () => {
         if (!selectedUser || !pointsToTransfer || pointsToTransfer < 1) {
-            alert('Please select a user and enter valid points amount');
+            alert(t('pointsTransfer.selectUserAndAmount'));
             return;
         }
 
         if (currentUser?.points < 10) {
-            alert('You need at least 10 points to transfer');
+            alert(t('pointsTransfer.minimumPoints'));
             return;
         }
 
         if (parseInt(pointsToTransfer) > currentUser?.points) {
-            alert('You don\'t have enough points to transfer');
+            alert(t('pointsTransfer.notEnoughPoints'));
             return;
         }
 
         setIsLoading(true);
         try {
             await dispatch(transferPoints(selectedUser._id, parseInt(pointsToTransfer)));
-            alert('Points transferred successfully!');
+            alert(t('pointsTransfer.transferSuccess'));
             onClose();
         } catch (error) {
-            alert(error.response?.data?.message || 'Transfer failed');
+            alert(error.response?.data?.message || t('pointsTransfer.transferFailed'));
         } finally {
             setIsLoading(false);
         }
@@ -56,23 +58,23 @@ const PointsTransfer = ({ currentUser, onClose }) => {
         <div className="points-transfer-overlay">
             <div className="points-transfer-modal">
                 <div className="modal-header">
-                    <h3>💰 Transfer Points</h3>
+                    <h3>💰 {t('pointsTransfer.title')}</h3>
                     <button className="close-btn" onClick={onClose}>×</button>
                 </div>
 
                 <div className="modal-content">
                     <div className="current-points">
-                        <span>Your Points: <strong>{currentUser?.points || 0}</strong></span>
+                        <span>{t('pointsTransfer.yourPoints')}: <strong>{currentUser?.points || 0}</strong></span>
                         {currentUser?.points < 10 && (
-                            <p className="error-text">You need at least 10 points to transfer</p>
+                            <p className="error-text">{t('pointsTransfer.minimumPoints')}</p>
                         )}
                     </div>
 
                     <div className="search-section">
-                        <label>Search User:</label>
+                        <label>{t('pointsTransfer.searchUser')}:</label>
                         <input
                             type="text"
-                            placeholder="Enter user name..."
+                            placeholder={t('pointsTransfer.searchPlaceholder')}
                             value={searchQuery}
                             onChange={(e) => handleSearch(e.target.value)}
                             className="search-input"
@@ -88,7 +90,7 @@ const PointsTransfer = ({ currentUser, onClose }) => {
                                     >
                                         <div className="user-info">
                                             <span className="user-name">{user.name}</span>
-                                            <span className="user-points">{user.points} points</span>
+                                            <span className="user-points">{user.points} {t('profile.points')}</span>
                                         </div>
                                     </div>
                                 ))}
@@ -98,16 +100,16 @@ const PointsTransfer = ({ currentUser, onClose }) => {
 
                     {selectedUser && (
                         <div className="selected-user">
-                            <h4>Selected User:</h4>
+                            <h4>{t('pointsTransfer.selectedUser')}:</h4>
                             <div className="user-card">
                                 <span className="user-name">{selectedUser.name}</span>
-                                <span className="user-points">{selectedUser.points} points</span>
+                                <span className="user-points">{selectedUser.points} {t('profile.points')}</span>
                             </div>
                         </div>
                     )}
 
                     <div className="points-input-section">
-                        <label>Points to Transfer:</label>
+                        <label>{t('pointsTransfer.pointsToTransfer')}:</label>
                         <input
                             type="number"
                             min="1"
@@ -115,7 +117,7 @@ const PointsTransfer = ({ currentUser, onClose }) => {
                             value={pointsToTransfer}
                             onChange={(e) => setPointsToTransfer(e.target.value)}
                             className="points-input"
-                            placeholder="Enter points amount"
+                            placeholder={t('pointsTransfer.pointsPlaceholder')}
                         />
                     </div>
 
@@ -125,9 +127,9 @@ const PointsTransfer = ({ currentUser, onClose }) => {
                             disabled={!selectedUser || !pointsToTransfer || isLoading || (currentUser?.points < 10)}
                             className="transfer-btn"
                         >
-                            {isLoading ? 'Transferring...' : 'Transfer Points'}
+                            {isLoading ? t('pointsTransfer.transferring') : t('pointsTransfer.transferPoints')}
                         </button>
-                        <button onClick={onClose} className="cancel-btn">Cancel</button>
+                        <button onClick={onClose} className="cancel-btn">{t('common.cancel')}</button>
                     </div>
                 </div>
             </div>

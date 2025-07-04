@@ -1,0 +1,409 @@
+.login-history-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.login-history-header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.login-history-header h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.login-history-header p {
+    color: #666;
+    font-size: 14px;
+}
+
+.login-history-loading {
+    text-align: center;
+    padding: 50px;
+    font-size: 18px;
+    color: #666;
+}
+
+.error-message {
+    background-color: #fee;
+    border: 1px solid #fcc;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.error-icon {
+    font-size: 18px;
+}
+
+.section {
+    margin-bottom: 40px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.section-header {
+    background: #f8f9fa;
+    padding: 20px;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.section-header h3 {
+    margin: 0;
+    color: #333;
+}
+
+.terminate-all-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.terminate-all-btn:hover {
+    background: #c82333;
+}
+
+/* Sessions Grid */
+.sessions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.session-card {
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 20px;
+    background: #fff;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.session-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.session-card.current-session {
+    border-color: #007bff;
+    background: #f8f9ff;
+}
+
+.session-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.device-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.device-icon {
+    font-size: 20px;
+}
+
+.current-badge {
+    background: #28a745;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.terminate-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.3s;
+}
+
+.terminate-btn:hover {
+    background: #c82333;
+}
+
+.session-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.detail-label {
+    font-weight: 500;
+    color: #666;
+    font-size: 14px;
+}
+
+.detail-value {
+    color: #333;
+    font-size: 14px;
+}
+
+/* History Table */
+.history-table {
+    display: flex;
+    flex-direction: column;
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 200px 250px 140px 120px 1fr;
+    gap: 15px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 200px 250px 140px 120px 1fr;
+    gap: 15px;
+    padding: 20px;
+    border-bottom: 1px solid #f1f1f1;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+.table-row:hover {
+    background-color: #f8f9fa;
+}
+
+.table-row:last-child {
+    border-bottom: none;
+}
+
+.col-time {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.time-main {
+    font-size: 14px;
+    color: #333;
+}
+
+.time-relative {
+    font-size: 12px;
+    color: #666;
+}
+
+.device-display {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.device-name {
+    font-size: 14px;
+    color: #333;
+}
+
+.device-type {
+    font-size: 12px;
+    color: #666;
+    text-transform: capitalize;
+}
+
+.ip-address {
+    font-family: monospace;
+    font-size: 13px;
+    color: #333;
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-badge.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-badge.failed {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.status-badge.otp {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-badge.restricted {
+    background: #f0f0f0;
+    color: #495057;
+}
+
+.login-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.detail-tag {
+    background: #e9ecef;
+    color: #495057;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 11px;
+    width: fit-content;
+}
+
+.detail-tag.verified {
+    background: #d4edda;
+    color: #155724;
+}
+
+.logout-time {
+    font-size: 12px;
+    color: #666;
+}
+
+.no-history {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .login-history-container {
+        padding: 15px;
+    }
+
+    .sessions-grid {
+        grid-template-columns: 1fr;
+        padding: 15px;
+    }
+
+    .section-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+
+    .table-header,
+    .table-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 15px;
+    }
+
+    .table-header {
+        display: none;
+    }
+
+    .table-row {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+
+    .col-time,
+    .col-device,
+    .col-location,
+    .col-status,
+    .col-details {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .col-time::before,
+    .col-device::before,
+    .col-location::before,
+    .col-status::before,
+    .col-details::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #666;
+    }
+
+    .device-display {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .login-history-container {
+        background-color: #1a1a1a;
+        color: #e9ecef;
+    }
+
+    .section {
+        background: #2d2d2d;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .section-header {
+        background: #3d3d3d;
+        border-bottom-color: #555;
+    }
+
+    .session-card {
+        background: #2d2d2d;
+        border-color: #555;
+    }
+
+    .session-card.current-session {
+        background: #1a1a2e;
+        border-color: #007bff;
+    }
+
+    .table-header {
+        background: #3d3d3d;
+        border-bottom-color: #555;
+    }
+
+    .table-row {
+        border-bottom-color: #555;
+    }
+
+    .table-row:hover {
+        background-color: #3d3d3d;
+    }
+}

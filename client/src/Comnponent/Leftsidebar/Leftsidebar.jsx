@@ -1,8 +1,10 @@
 import React from 'react'
 import './Leftsidebar.css'
 import { NavLink } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import Globe from "../../assets/Globe.svg"
 const Leftsidebar = ({ slidein }) => {
+    const { t } = useTranslation();
     const slideinstyle = {
         transform: "translateX(0%)",
     };
@@ -14,37 +16,34 @@ const Leftsidebar = ({ slidein }) => {
             <nav className='side-nav'>
                 <button className="nav-btnn">
                     <NavLink to='/' className="side-nav-links" activeclassname='active'>
-                        <p>Home</p>
+                        <p>{t('common.home')}</p>
                     </NavLink>
                 </button>
                 <div className="side-nav-div">
-                    <div>
-                        <p>PUBLIC</p>
-                    </div>
                     <button className='nav-btnn'>
                         <NavLink to='/Question' className='side-nav-links' activeclassname='active'>
                             <img src={Globe} alt="globe" />
-                            <p style={{ paddingLeft: '10px' }}>Questions</p>
+                            <p style={{ paddingLeft: '10px' }}>{t('sidebar.questions')}</p>
                         </NavLink>
                     </button>
                     <button className='nav-btnn'>
                         <NavLink to='/PublicSpace' className='side-nav-links' activeclassname='active' style={{ paddingLeft: "40px" }}>
-                            <p >Public Space</p>
+                            <p>{t('sidebar.publicSpace')}</p>
                         </NavLink>
                     </button>
                     <button className='nav-btnn'>
                         <NavLink to='/Tags' className='side-nav-links' activeclassname='active' style={{ paddingLeft: "40px" }}>
-                            <p >Tags</p>
+                            <p>{t('sidebar.tags')}</p>
                         </NavLink>
                     </button>
                     <button className='nav-btnn'>
                         <NavLink to='/Users' className='side-nav-links' activeclassname='active' style={{ paddingLeft: "40px" }}>
-                            <p >Users</p>
+                            <p>{t('sidebar.users')}</p>
                         </NavLink>
                     </button>
                     <button className='nav-btnn'>
                         <NavLink to='/Leaderboard' className='side-nav-links' activeclassname='active' style={{ paddingLeft: "40px" }}>
-                            <p >🏆 Leaderboard</p>
+                            <p>🏆 {t('sidebar.leaderboard')}</p>
                         </NavLink>
                     </button>
                 </div>

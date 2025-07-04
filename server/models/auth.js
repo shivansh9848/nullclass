@@ -31,6 +31,70 @@ const userschema = mongoose.Schema({
       relatedId: { type: String },
     },
   ],
+  // Login tracking fields
+  loginHistory: [
+    {
+      loginTime: { type: Date, default: Date.now },
+      ipAddress: { type: String },
+      userAgent: { type: String },
+      deviceInfo: {
+        browser: { type: String },
+        os: { type: String },
+        platform: { type: String },
+        device: { type: String }, // desktop, mobile, tablet
+        isMobile: { type: Boolean, default: false },
+        isDesktop: { type: Boolean, default: false },
+        isTablet: { type: Boolean, default: false },
+      },
+      loginStatus: {
+        type: String,
+        enum: ["success", "failed", "otp_required", "time_restricted"],
+        default: "success",
+      },
+      otpSent: { type: Boolean, default: false },
+      otpVerified: { type: Boolean, default: false },
+      sessionId: { type: String },
+      logoutTime: { type: Date },
+    },
+  ],
+  // Current session tracking
+  currentSessions: [
+    {
+      sessionId: { type: String, required: true },
+      deviceInfo: {
+        browser: { type: String },
+        os: { type: String },
+        platform: { type: String },
+        device: { type: String },
+        isMobile: { type: Boolean, default: false },
+      },
+      ipAddress: { type: String },
+      loginTime: { type: Date, default: Date.now },
+      lastActivity: { type: Date, default: Date.now },
+      isActive: { type: Boolean, default: true },
+    },
+  ],
+  // OTP for login verification
+  loginOTP: { type: String },
+  loginOTPExpires: { type: Date },
+  loginOTPAttempts: { type: Number, default: 0 },
+  lastLoginOTPRequest: { type: Date },
+  // Language verification tracking
+  languagesVerified: {
+    type: Map,
+    of: {
+      verified: { type: Boolean, default: false },
+      verifiedAt: { type: Date },
+      method: { type: String, enum: ["email", "sms"] },
+    },
+    default: new Map(),
+  },
+  // OTP for language switching
+  languageOTP: { type: String },
+  languageOTPExpires: { type: Date },
+  languageOTPAttempts: { type: Number, default: 0 },
+  lastLanguageOTPRequest: { type: Date },
+  preferredLanguage: { type: String, default: "en" },
 });
 
 export default mongoose.model("User", userschema);

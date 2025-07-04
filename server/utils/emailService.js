@@ -323,3 +323,108 @@ Note: Email configuration not found. In production, configure:
     return { success: false, message: "Failed to send OTP email" };
   }
 };
+
+// Send login OTP email
+export const sendLoginOTPEmail = async (email, otp, deviceInfo) => {
+  try {
+    if (!validateEmail(email)) {
+      throw new Error("Invalid email address");
+    }
+
+    const transporter = createTransporter();
+
+    const mailOptions = {
+      from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
+      to: email,
+      subject: "Login Verification - stackoverflow",
+      html: `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <style>
+            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+            .header { background-color: #007ac6; color: white; padding: 20px; text-align: center; }
+            .content { padding: 20px; background-color: #f9f9f9; }
+            .otp-box { background-color: #fff; border: 2px solid #007ac6; padding: 20px; margin: 20px 0; text-align: center; border-radius: 8px; }
+            .otp { font-size: 32px; font-weight: bold; color: #007ac6; letter-spacing: 5px; font-family: 'Courier New', monospace; }
+            .device-info { background-color: #e8f4f8; border-left: 4px solid #007ac6; padding: 15px; margin: 15px 0; }
+            .warning { background-color: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 5px; margin: 15px 0; }
+            .footer { padding: 20px; text-align: center; font-size: 12px; color: #666; }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <div class="header">
+              <h1>Login Verification Required</h1>
+            </div>
+            <div class="content">
+              <h2>Hello!</h2>
+              <p>We detected a login attempt from a Chrome-based browser. Please use the OTP below to complete your login:</p>
+              
+              <div class="otp-box">
+                <p style="margin: 0 0 10px 0; font-size: 14px; color: #666;">Your Login Verification Code:</p>
+                <div class="otp">${otp}</div>
+              </div>
+              
+              <div class="device-info">
+                <p><strong>Login Details:</strong></p>
+                <ul>
+                  <li><strong>Browser:</strong> ${deviceInfo.browser}</li>
+                  <li><strong>Operating System:</strong> ${deviceInfo.os}</li>
+                  <li><strong>Device Type:</strong> ${deviceInfo.device}</li>
+                  <li><strong>Time:</strong> ${new Date().toLocaleString()}</li>
+                </ul>
+              </div>
+              
+              <div class="warning">
+                <p><strong>Important:</strong></p>
+                <ul>
+                  <li>This OTP is valid for 10 minutes only</li>
+                  <li>Do not share this code with anyone</li>
+                  <li>If you didn't attempt to login, please secure your account immediately</li>
+                </ul>
+              </div>
+              
+              <p>If you didn't request this login, please ignore this email and consider changing your password.</p>
+            </div>
+            <div class="footer">
+              <p>&copy; 2025 stackoverflow. All rights reserved.</p>
+              <p>This is an automated email, please do not reply.</p>
+            </div>
+          </div>
+        </body>
+        </html>
+      `,
+    };
+
+    // Check if email configuration is available
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
+      console.log(`
+========= LOGIN OTP EMAIL (DEVELOPMENT MODE) =========
+To: ${email}
+Subject: Login Verification - stackoverflow
+OTP: ${otp}
+Device: ${deviceInfo.browser} on ${deviceInfo.os} (${deviceInfo.device})
+
+Note: Email configuration not found. In production, configure:
+- EMAIL_USER: Your Gmail address
+- EMAIL_PASSWORD: Your Gmail app password
+- EMAIL_FROM: Sender email address
+==========================================================
+      `);
+      return {
+        success: true,
+        message: "Login OTP sent successfully (development mode)",
+      };
+    }
+
+    await transporter.sendMail(mailOptions);
+    console.log(`Login OTP email sent to: ${email}`);
+
+    return { success: true, message: "Login OTP sent successfully" };
+  } catch (error) {
+    console.error("Login OTP email sending error:", error);
+    return { success: false, message: "Failed to send login OTP email" };
+  }
+};

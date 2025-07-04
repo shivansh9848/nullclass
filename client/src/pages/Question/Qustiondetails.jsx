@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import moment from 'moment'
 import copy from "copy-to-clipboard"
+import { useTranslation } from 'react-i18next'
 import upvote from "../../assets/sort-up.svg"
 import downvote from "../../assets/sort-down.svg"
 import './Question.css'
@@ -9,7 +10,9 @@ import Displayanswer from './Displayanswer'
 import { useSelector, useDispatch } from "react-redux"
 import { Link, useNavigate, useLocation, useParams } from 'react-router-dom'
 import { deletequestion, votequestion, postanswer } from '../../action/question'
+
 const Qustiondetails = () => {
+    const { t } = useTranslation();
     const [answer, setanswer] = useState("")
     const dispatch = useDispatch()
     const questionlist = useSelector((state) => state.questionreducer)
@@ -18,14 +21,15 @@ const Qustiondetails = () => {
     const location = useLocation()
     const navigate = useNavigate()
     const url = "http://localhost:3000"
+
     const handlepostans = (e, answerlength) => {
         e.preventDefault();
         if (user === null) {
-            alert("Login or Signup to answer a question")
+            alert(t('auth.loginToAskQuestion'))
             navigate('/Auth')
         } else {
             if (answer === "") {
-                alert("Enter an answer before submitting")
+                alert(t('validation.required'))
             } else {
                 dispatch(postanswer({
                     id,
@@ -38,25 +42,28 @@ const Qustiondetails = () => {
             }
         }
     }
+
     const handleshare = () => {
         copy(url + location.pathname);
-        alert("Copied url :" + url + location.pathname)
+        alert(t('questions.copyUrl') + url + location.pathname)
     }
 
     const handledelete = () => {
         dispatch(deletequestion(id, navigate))
     }
+
     const handleupvote = () => {
         if (user === null) {
-            alert("Login or Signup to answer a question")
+            alert(t('auth.loginToAskQuestion'))
             navigate('/Auth')
         } else {
             dispatch(votequestion(id, "upvote"))
         }
     }
+
     const handledownvote = () => {
         if (user === null) {
-            alert("Login or Signup to answer a question")
+            alert(t('auth.loginToAskQuestion'))
             navigate('/Auth')
         } else {
             dispatch(votequestion(id, "downvote"))
@@ -65,7 +72,7 @@ const Qustiondetails = () => {
     return (
         <div className="question-details-page">
             {questionlist.data === null ? (
-                <h1>Loading...</h1>
+                <h1>{t('common.loading')}</h1>
             ) : (
                 <>
                     {questionlist.data.filter((question) => question._id === id).map((question) => (
@@ -82,14 +89,14 @@ const Qustiondetails = () => {
                                         <p className='question-body'>{question.questionbody}</p>
                                         {question.videoUrl && (
                                             <div className="question-video-container">
-                                                <h4>Video Explanation:</h4>
+                                                <h4>{t('questions.videoExplanation')}</h4>
                                                 <video
                                                     src={question.videoUrl}
                                                     controls
                                                     className="question-video"
                                                     preload="metadata"
                                                 >
-                                                    Your browser does not support the video tag.
+                                                    {t('questions.videoNotSupported')}
                                                 </video>
                                             </div>
                                         )}
@@ -101,14 +108,14 @@ const Qustiondetails = () => {
                                         <div className="question-actions-user">
                                             <div>
                                                 <button type='button' onClick={handleshare}>
-                                                    Share
+                                                    {t('questions.share')}
                                                 </button>
                                                 {user?.result?._id === question?.userid && (
-                                                    <button type='button' onClick={handledelete}>Delete</button>
+                                                    <button type='button' onClick={handledelete}>{t('common.delete')}</button>
                                                 )}
                                             </div>
                                             <div>
-                                                <p>Asked {moment(question.askedon).fromNow()}</p>
+                                                <p>{t('questions.asked')} {moment(question.askedon).fromNow()}</p>
                                                 <Link to={`Users/${question.userid}`} className='user-limk' style={{ color: "#0086d8" }}>
                                                     <Avatar backgroundColor="orange" px="8px" py="5px" borderRadius="4px">
                                                         {question.userposted.charAt(0).toUpperCase()}
@@ -122,30 +129,30 @@ const Qustiondetails = () => {
                             </section>
                             {question.noofanswers !== 0 && (
                                 <section>
-                                    <h3>{question.noofanswers} Answers</h3>
+                                    <h3>{question.noofanswers} {t('questions.answers')}</h3>
                                     <Displayanswer key={question._id} question={question} handleshare={handleshare} />
                                 </section>
                             )}
                             <section className="post-ans-container">
-                                <h3>Your Answer</h3>
+                                <h3>{t('questions.yourAnswer')}</h3>
                                 <form onSubmit={(e) => {
                                     handlepostans(e, question.answer.length)
                                 }}>
                                     <textarea name="" id="" cols="30" rows="10" vlaue={answer} onChange={(e) => setanswer(e.target.value)}></textarea>
                                     <br />
-                                    <input type="submit" className="post-ans-btn" value="Post your Answer" />
+                                    <input type="submit" className="post-ans-btn" value={t('questions.postAnswer')} />
                                 </form>
-                                <p>Browse other Question tagged
+                                <p>{t('questions.browseOtherQuestions')}
                                     {question.questiontags.map((tag) => (
                                         <Link to="/Tags" key={tag} className='ans-tag'>
                                             {" "}
                                             {tag}{" "}
                                         </Link>
                                     ))}{" "}
-                                    or
+                                    {t('questions.or')}
                                     <Link to="/Askquestion" style={{ textDecoration: "none", color: "#009dff" }}>
                                         {" "}
-                                        Ask your own question
+                                        {t('questions.askYourQuestion')}
                                     </Link>
                                 </p>
                             </section>

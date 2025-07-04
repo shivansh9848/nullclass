@@ -1,6 +1,8 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 function Widgettag() {
+    const { t } = useTranslation();
     const tags = [
         "c",
         "css",
@@ -19,15 +21,15 @@ function Widgettag() {
         "reactjs",
     ]
     return (
-    <div className="widget-tags">
-        <h4>Watched tags</h4>
-        <div className="widget-tags-div">
-            {tags.map((tag)=>(
-                <p key={tag}>{tag}</p>
-            ))}
+        <div className="widget-tags">
+            <h4>{t('sidebar.watchedTags')}</h4>
+            <div className="widget-tags-div">
+                {tags.map((tag) => (
+                    <p key={tag}>{tag}</p>
+                ))}
+            </div>
         </div>
-    </div>
-  )
+    )
 }
 
 export default Widgettag

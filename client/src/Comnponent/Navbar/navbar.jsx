@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux"
+import { useTranslation } from 'react-i18next'
 import bars from '../../assets/bars-solid.svg'
 import logo from '../../assets/logo.png';
 import search from '../../assets/search-solid.svg'
 import Avatar from '../Avatar/Avatar';
 import MobileSearch from '../MobileSearch/MobileSearch';
+import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 import './navbar.css';
 import { setcurrentuser } from '../../action/currentuser'
 import { jwtDecode } from "jwt-decode"
 
 function Navbar({ handleslidein }) {
+    const { t } = useTranslation();
     var User = useSelector((state) => state.currentuserreducer)
     const [showMobileSearch, setShowMobileSearch] = useState(false)
     const navigate = useNavigate()
@@ -44,17 +47,8 @@ function Navbar({ handleslidein }) {
                         <Link to='/' className='nav-item nav-logo'>
                             <img src={logo} alt="logo" />
                         </Link>
-                        <Link to="/" className="nav-item nav-btn res-nav">
-                            About
-                        </Link>
-                        <Link to="/" className="nav-item nav-btn res-nav">
-                            Products
-                        </Link>
-                        <Link to="/" className="nav-item nav-btn res-nav">
-                            For Teams
-                        </Link>
                         <form className="desktop-search">
-                            <input type="text" placeholder='Search...' />
+                            <input type="text" placeholder={t('common.search')} />
                             <img src={search} alt="search" width='18' className='search-icon' />
                         </form>
                         <button
@@ -65,9 +59,10 @@ function Navbar({ handleslidein }) {
                         </button>
                     </div>
                     <div className="navbar-2">
+                        <LanguageSwitcher />
                         {User === null ? (
                             <Link to='/Auth' className='nav-item nav-links'>
-                                Log in
+                                {t('common.login')}
                             </Link>
                         ) : (
                             <>
@@ -76,7 +71,7 @@ function Navbar({ handleslidein }) {
                                         {User.result.name.charAt(0).toUpperCase()}
                                     </Link>
                                 </Avatar>
-                                <button className="nav-tem nav-links" onClick={handlelogout}>Log out</button>
+                                <button className="nav-tem nav-links" onClick={handlelogout}>{t('common.logout')}</button>
                             </>
                         )}
                     </div>

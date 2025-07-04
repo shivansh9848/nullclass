@@ -1,17 +1,19 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import moment from "moment"
 
 const Question = ({ question }) => {
+    const { t } = useTranslation();
     return (
         <div className="display-question-container">
             <div className="display-votes-ans">
                 <p>{question.upvote.length - question.downvote.length}</p>
-                <p>votes</p>
+                <p>{t('home.votes')}</p>
             </div>
             <div className="display-votes-ans">
                 <p>{question.noofanswers}</p>
-                <p>answers</p>
+                <p>{t('home.answers')}</p>
             </div>
             <div className="display-question-details">
                 <Link to={`/Question/${question._id}`} className='question-title-link'>
@@ -26,7 +28,7 @@ const Question = ({ question }) => {
                 {question.videoUrl && (
                     <div className="question-video-indicator">
                         <span className="video-icon">🎥</span>
-                        <span className="video-text">Video included</span>
+                        <span className="video-text">{t('questions.videoIncluded')}</span>
                     </div>
                 )}
                 <div className="display-tags-time">
@@ -36,7 +38,7 @@ const Question = ({ question }) => {
                         ))}
                     </div>
                     <p className="display-time">
-                        asked {moment(question.askedon).fromNow()} {question.userposted}
+                        {t('home.asked')} {moment(question.askedon).fromNow()} {question.userposted}
                     </p>
                 </div>
             </div>

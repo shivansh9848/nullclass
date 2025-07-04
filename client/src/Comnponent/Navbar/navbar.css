@@ -135,6 +135,26 @@
     background-color: #d3e4eb;
 }
 
+/* Language Switcher Styles */
+.navbar .navbar-2 .language-switcher {
+    margin-right: 10px;
+}
+
+.navbar .navbar-2 .language-switcher .language-switcher-button {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+.navbar .navbar-2 .language-switcher .language-switcher-button:hover {
+    background: #f8f9fa;
+    border-color: #007bff;
+}
+
 /* Tablet Styles */
 @media screen and (max-width: 1120px) {
 
