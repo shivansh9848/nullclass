@@ -11,8 +11,12 @@ const PublicSpace = ({ slidein, handleslidein }) => {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [refreshPosts, setRefreshPosts] = useState(false);
+    const [error, setError] = useState(null);
 
     const User = useSelector((state) => state.currentuserreducer);
+
+    // Add safety check to prevent null reference errors
+    const currentUser = User?.result || null;
 
     useEffect(() => {
         fetchPosts();
@@ -20,6 +24,7 @@ const PublicSpace = ({ slidein, handleslidein }) => {
 
     const fetchPosts = async () => {
         try {
+            setError(null);
             const response = await fetch(`http://localhost:5000/api/posts?page=${page}&limit=10`);
             const data = await response.json();
 
@@ -37,6 +42,7 @@ const PublicSpace = ({ slidein, handleslidein }) => {
             setLoading(false);
         } catch (error) {
             console.error('Error fetching posts:', error);
+            setError('Failed to load posts. Please try again.');
             setPosts([]);
             setLoading(false);
         }
@@ -61,6 +67,24 @@ const PublicSpace = ({ slidein, handleslidein }) => {
         );
     }
 
+    if (error) {
+        return (
+            <div className="public-space">
+                <div className="error-message">
+                    <h3>Error</h3>
+                    <p>{error}</p>
+                    <button onClick={() => {
+                        setError(null);
+                        setPage(1);
+                        setRefreshPosts(!refreshPosts);
+                    }} className="retry-button">
+                        Try Again
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="public-space">
             <div className="public-space-header">
@@ -70,16 +94,16 @@ const PublicSpace = ({ slidein, handleslidein }) => {
 
             <div className="public-space-content">
                 <div className="main-content">
-                    {User && (
+                    {currentUser && (
                         <CreatePost
-                            user={User.result || User}
+                            user={currentUser}
                             onPostCreated={handleNewPost}
                         />
                     )}
 
                     <PostList
                         posts={posts}
-                        currentUser={User.result || User}
+                        currentUser={currentUser}
                         onPostUpdate={handleNewPost}
                     />
 
@@ -96,7 +120,7 @@ const PublicSpace = ({ slidein, handleslidein }) => {
                     )}
                 </div>
 
-                <FriendsSidebar user={User.result || User} />
+                <FriendsSidebar user={currentUser} />
             </div>
         </div>
     );

@@ -20,8 +20,44 @@ const Userprofile = ({ slidein }) => {
     const [showPointsTransfer, setShowPointsTransfer] = useState(false);
 
     const users = useSelector((state) => state.usersreducer.users || [])
-    const currentprofile = users.filter((user) => user._id === id)[0]
     const currentuser = useSelector((state) => state.currentuserreducer)
+
+    // Get the profile
+    let currentprofile = null;
+
+    if (currentuser?.result?._id === id) {
+        // Viewing own profile - always use current user data
+        currentprofile = {
+            ...currentuser.result,
+            // Ensure we have default values for missing fields
+            points: currentuser.result.points || 0,
+            joinedon: currentuser.result.joinedon || new Date(),
+            name: currentuser.result.name || 'User',
+            email: currentuser.result.email || '',
+        };
+    } else {
+        // Viewing someone else's profile - get from users array
+        currentprofile = users.find((user) => user._id === id);
+    }
+
+    // Only show "user not found" for other users, not for your own profile
+    if (!currentprofile) {
+        return (
+            <div className="home-container-1">
+                <Leftsidebar slidein={slidein} />
+                <div className="home-container-2">
+                    <section>
+                        <div className="user-details-container">
+                            <div className="loading-message">
+                                <h2>{t('profile.userNotFound')}</h2>
+                                <p>{t('profile.userNotFoundDesc')}</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div className="home-container-1">

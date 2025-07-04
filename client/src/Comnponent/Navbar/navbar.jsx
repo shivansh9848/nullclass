@@ -26,14 +26,33 @@ function Navbar({ handleslidein }) {
     }
 
     useEffect(() => {
-        const token = User?.token;
-        if (token) {
-            const decodedtoken = jwtDecode(token);
-            if (decodedtoken.exp * 1000 < new Date().getTime()) {
-                handlelogout();
+        try {
+            const token = User?.token;
+            if (token) {
+                const decodedtoken = jwtDecode(token);
+                if (decodedtoken.exp * 1000 < new Date().getTime()) {
+                    handlelogout();
+                    return;
+                }
             }
+
+            // Safely handle localStorage
+            const profile = localStorage.getItem("Profile");
+            if (profile) {
+                try {
+                    const parsedProfile = JSON.parse(profile);
+                    dispatch(setcurrentuser(parsedProfile));
+                } catch (error) {
+                    console.error("Error parsing profile from localStorage:", error);
+                    // Clear corrupted data
+                    localStorage.removeItem("Profile");
+                    dispatch(setcurrentuser(null));
+                }
+            }
+        } catch (error) {
+            console.error("Error in user authentication check:", error);
+            handlelogout();
         }
-        dispatch(setcurrentuser(JSON.parse(localStorage.getItem("Profile"))))
     }, [User?.token, dispatch]);
 
     return (

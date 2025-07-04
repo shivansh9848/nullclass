@@ -116,7 +116,7 @@ const Qustiondetails = () => {
                                             </div>
                                             <div>
                                                 <p>{t('questions.asked')} {moment(question.askedon).fromNow()}</p>
-                                                <Link to={`Users/${question.userid}`} className='user-limk' style={{ color: "#0086d8" }}>
+                                                <Link to={`/Users/${question.userid}`} className='user-limk' style={{ color: "#0086d8" }}>
                                                     <Avatar backgroundColor="orange" px="8px" py="5px" borderRadius="4px">
                                                         {question.userposted.charAt(0).toUpperCase()}
                                                     </Avatar>

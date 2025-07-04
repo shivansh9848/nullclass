@@ -5,6 +5,7 @@ import {
   getallquestion,
   deletequestion,
   votequestion,
+  testCloudinaryConfig,
 } from "../controller/Question.js";
 import auth from "../middleware/auth.js";
 import { checkVideoUploadTime } from "../middleware/videoUpload.js";
@@ -23,5 +24,6 @@ router.post(
 router.get("/get", getallquestion);
 router.delete("/delete/:id", auth, deletequestion);
 router.patch("/vote/:id", auth, votequestion);
+router.get("/test-cloudinary", testCloudinaryConfig);
 
 export default router;

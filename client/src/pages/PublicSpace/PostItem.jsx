@@ -8,7 +8,7 @@ const PostItem = ({ post, currentUser, onPostUpdate }) => {
     const [loading, setLoading] = useState(false);
 
     // Safety check for post object
-    if (!post || !post.userId) {
+    if (!post) {
         return (
             <div className="post-item">
                 <div className="post-error">
@@ -17,6 +17,19 @@ const PostItem = ({ post, currentUser, onPostUpdate }) => {
             </div>
         );
     }
+
+    // Provide fallback values for missing properties
+    const safePost = {
+        _id: post._id || '',
+        content: post.content || '',
+        userId: post.userId || { name: 'Unknown User' },
+        createdAt: post.createdAt || new Date(),
+        likes: post.likes || [],
+        comments: post.comments || [],
+        shares: post.shares || [],
+        media: post.media || [],
+        ...post
+    };
 
     const getAuthToken = () => {
         return localStorage.getItem('Profile') ?
@@ -28,7 +41,7 @@ const PostItem = ({ post, currentUser, onPostUpdate }) => {
 
         try {
             const token = getAuthToken();
-            const response = await fetch(`http://localhost:5000/api/posts/${post._id}/like`, {
+            const response = await fetch(`http://localhost:5000/api/posts/${safePost._id}/like`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -50,7 +63,7 @@ const PostItem = ({ post, currentUser, onPostUpdate }) => {
         setLoading(true);
         try {
             const token = getAuthToken();
-            const response = await fetch(`http://localhost:5000/api/posts/${post._id}/comment`, {
+            const response = await fetch(`http://localhost:5000/api/posts/${safePost._id}/comment`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -75,7 +88,7 @@ const PostItem = ({ post, currentUser, onPostUpdate }) => {
 
         try {
             const token = getAuthToken();
-            const response = await fetch(`http://localhost:5000/api/posts/${post._id}/share`, {
+            const response = await fetch(`http://localhost:5000/api/posts/${safePost._id}/share`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -91,28 +104,29 @@ const PostItem = ({ post, currentUser, onPostUpdate }) => {
         }
     };
 
-    const isLiked = currentUser && post.likes && post.likes.some(like => like.userId?._id === currentUser._id);
+    const isLiked = currentUser && safePost.likes && safePost.likes.some(like => like.userId?._id === currentUser._id);
 
     return (
         <div className="post-item">
             <div className="post-header">
-                <div className="user-info">                <div className="user-avatar">
-                    {post.userId?.name ? post.userId.name.charAt(0).toUpperCase() : '?'}
-                </div>
+                <div className="user-info">
+                    <div className="user-avatar">
+                        {safePost.userId?.name ? safePost.userId.name.charAt(0).toUpperCase() : '?'}
+                    </div>
                     <div className="user-details">
-                        <h4 className="user-name">{post.userId?.name || 'Unknown User'}</h4>
-                        <span className="post-time">{moment(post.createdAt).fromNow()}</span>
+                        <h4 className="user-name">{safePost.userId?.name || 'Unknown User'}</h4>
+                        <span className="post-time">{moment(safePost.createdAt).fromNow()}</span>
                     </div>
                 </div>
             </div>
 
             <div className="post-content">
-                <p>{post.content}</p>
+                <p>{safePost.content}</p>
             </div>
 
-            {post.media && post.media.length > 0 && (
+            {safePost.media && safePost.media.length > 0 && (
                 <div className="post-media">
-                    {post.media.map((media, index) => (
+                    {safePost.media.map((media, index) => (
                         <div key={index} className="media-item">
                             {media.type === 'image' ? (
                                 <img
@@ -134,13 +148,13 @@ const PostItem = ({ post, currentUser, onPostUpdate }) => {
 
             <div className="post-stats">
                 <span className="stat-item">
-                    {post.likes?.length || 0} {(post.likes?.length || 0) === 1 ? 'Like' : 'Likes'}
+                    {safePost.likes?.length || 0} {(safePost.likes?.length || 0) === 1 ? 'Like' : 'Likes'}
                 </span>
                 <span className="stat-item">
-                    {post.comments?.length || 0} {(post.comments?.length || 0) === 1 ? 'Comment' : 'Comments'}
+                    {safePost.comments?.length || 0} {(safePost.comments?.length || 0) === 1 ? 'Comment' : 'Comments'}
                 </span>
                 <span className="stat-item">
-                    {post.shares?.length || 0} {(post.shares?.length || 0) === 1 ? 'Share' : 'Shares'}
+                    {safePost.shares?.length || 0} {(safePost.shares?.length || 0) === 1 ? 'Share' : 'Shares'}
                 </span>
             </div>
 
@@ -170,7 +184,7 @@ const PostItem = ({ post, currentUser, onPostUpdate }) => {
             {showComments && (
                 <div className="comments-section">
                     <div className="comments-list">
-                        {post.comments && post.comments.map((comment, index) => (
+                        {safePost.comments && safePost.comments.map((comment, index) => (
                             <div key={index} className="comment-item">
                                 <div className="comment-avatar">
                                     {comment.userId?.name ? comment.userId.name.charAt(0).toUpperCase() : '?'}

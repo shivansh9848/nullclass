@@ -15,6 +15,7 @@ import Userprofile from './pages/Userprofile/Userprofile'
 import PublicSpace from './pages/PublicSpace/PublicSpace'
 import Leaderboard from './pages/Leaderboard/LeaderboardPage'
 import LoginHistory from './Comnponent/LoginHistory/LoginHistory'
+import ErrorBoundary from './Comnponent/ErrorBoundary/ErrorBoundary'
 
 function Allroutes({ slidein, handleslidein }) {
     return (
@@ -31,7 +32,11 @@ function Allroutes({ slidein, handleslidein }) {
             <Route path='/Tags' element={<Tags slidein={slidein} handleslidein={handleslidein} />} />
             <Route path='/Users' element={<Users slidein={slidein} handleslidein={handleslidein} />} />
             <Route path='/Users/:id' element={<Userprofile slidein={slidein} handleslidein={handleslidein} />} />
-            <Route path='/PublicSpace' element={<PublicSpace slidein={slidein} handleslidein={handleslidein} />} />
+            <Route path='/PublicSpace' element={
+                <ErrorBoundary>
+                    <PublicSpace slidein={slidein} handleslidein={handleslidein} />
+                </ErrorBoundary>
+            } />
             <Route path='/Leaderboard' element={<Leaderboard slidein={slidein} handleslidein={handleslidein} />} />
             <Route path='/login-history' element={<LoginHistory />} />
         </Routes>

@@ -22,8 +22,12 @@ const Askquestion = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const isVideoUploadAllowed = () => {
-        const currentHour = new Date().getHours();
-        return currentHour >= 14 && currentHour < 19; // 2PM to 7PM
+        // DISABLED FOR TESTING - Video uploads are now allowed at any time
+        return true;
+
+        // Original time restriction logic (commented out):
+        // const currentHour = new Date().getHours();
+        // return currentHour >= 14 && currentHour < 19; // 2PM to 7PM
     };
 
     const handleVideoSelect = async (video) => {
@@ -83,10 +87,11 @@ const Askquestion = () => {
 
         // If video is selected, check time restrictions and OTP verification
         if (selectedVideo) {
-            if (!isVideoUploadAllowed()) {
-                alert(t('askQuestion.videoTimeRestriction'));
-                return;
-            }
+            // Time restriction check DISABLED FOR TESTING
+            // if (!isVideoUploadAllowed()) {
+            //     alert(t('askQuestion.videoTimeRestriction'));
+            //     return;
+            // }
 
             if (!isOTPVerified) {
                 alert(t('askQuestion.verifyEmailFirst'));
