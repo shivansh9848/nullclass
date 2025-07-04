@@ -46,7 +46,7 @@ const LoginOTPVerification = ({ email, onCancel, onSuccess }) => {
         setError('');
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/auth/verify-login-otp`, {
+            const response = await fetch(`${process.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/verify-login-otp`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

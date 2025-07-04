@@ -10,7 +10,13 @@ i18n
   .init({
     fallbackLng: "en",
     supportedLngs: ["en", "fr", "hi", "es", "pt", "zh"],
-    debug: process.env.NODE_ENV === "development",
+    debug: import.meta.env.DEV,
+
+    // Preload the default language
+    preload: ["en"],
+
+    // Load translations synchronously for better initial render
+    initImmediate: false,
 
     interpolation: {
       escapeValue: false, // React already escapes values

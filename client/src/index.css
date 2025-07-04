@@ -1,3 +1,6 @@
+/* Import responsive utilities */
+@import './styles/responsive-utils.css';
+
 * {
     box-sizing: border-box;
 }
@@ -25,9 +28,6 @@ code {
 .desktop-only {
     display: block;
 }
-
-/* Import responsive utilities */
-@import './styles/responsive-utils.css';
 
 @media screen and (max-width: 768px) {
     .mobile-only {

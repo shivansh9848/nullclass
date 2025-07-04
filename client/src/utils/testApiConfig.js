@@ -1,11 +1,11 @@
 // Test script to verify API configuration
-import { getApiUrl, API_BASE_URL } from "./apiConfig";
+import { getApiUrl, API_BASE_URL } from "./utils/apiConfig";
 
 console.log("API Configuration Test");
 console.log("======================");
 console.log(
-  "Environment Variable (REACT_APP_API_URL):",
-  process.env.REACT_APP_API_URL
+  "Environment Variable (VITE_API_URL):",
+  import.meta.env.VITE_API_URL
 );
 console.log("API Base URL:", API_BASE_URL);
 console.log("");

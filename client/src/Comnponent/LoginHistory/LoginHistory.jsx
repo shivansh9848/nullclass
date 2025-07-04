@@ -22,7 +22,7 @@ const LoginHistory = () => {
                 return;
             }
 
-            const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/auth/login-history`, {
+            const response = await fetch(`${process.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/login-history`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -48,7 +48,7 @@ const LoginHistory = () => {
         try {
             const token = localStorage.getItem('Profile') ? JSON.parse(localStorage.getItem('Profile')).token : null;
 
-            const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/auth/sessions/${sessionId}`, {
+            const response = await fetch(`${process.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/sessions/${sessionId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -75,7 +75,7 @@ const LoginHistory = () => {
         try {
             const token = localStorage.getItem('Profile') ? JSON.parse(localStorage.getItem('Profile')).token : null;
 
-            const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/auth/sessions`, {
+            const response = await fetch(`${process.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/sessions`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`

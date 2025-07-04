@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import "./Auth.css"
-import icon from '../../assets/icon.png'
+import logo from '../../assets/logo.png'
 import Aboutauth from './Aboutauth'
 import { signup, login } from '../../action/auth'
 import LoginOTPVerification from '../../Comnponent/OTPVerification/LoginOTPVerification'
@@ -40,7 +40,7 @@ const Auth = () => {
             setLoading(true);
 
             try {
-                const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/auth/login`, {
+                const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/login`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -111,7 +111,7 @@ const Auth = () => {
         <section className="auth-section">
             {issignup && <Aboutauth />}
             <div className="auth-container-2">
-                <img src={icon} alt="icon" className='login-logo' />
+                <img src={logo} alt="logo" className='login-logo' />
                 <form onSubmit={handlesubmit}>
                     {issignup && (
                         <label htmlFor="name">
