@@ -322,13 +322,14 @@
 .error-message {
     background: #fff5f5;
     border: 1px solid #f5c6cb;
-    color: #721c24;
+    color: #dc3545 !important; /* Make error text red and visible */
     padding: 12px;
     border-radius: 8px;
     display: flex;
     align-items: center;
     gap: 8px;
     font-size: 14px;
+    font-weight: 500;
 }
 
 .error-icon {
@@ -339,7 +340,15 @@
 .navbar .language-switcher-button {
     background: #ffffff !important;
     color: #333333 !important;
-    border: 1px solid #dee2e6 !important;
+}
+
+/* Ensure error message is always visible */
+.navbar .error-message,
+.modal .error-message,
+.verification-modal .error-message {
+    color: #dc3545 !important;
+    background: #fff5f5 !important;
+    border: 1px solid #f5c6cb !important;
     font-weight: 500 !important;
 }
 

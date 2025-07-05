@@ -38,20 +38,28 @@ const LanguageSwitcher = () => {
             return;
         }
 
-        setSelectedLanguage(languageCode);
-        setError(null);
-        setOtp('');
-        setPhoneNumber('');
-        setStep('contact');
-
-        // Determine verification type based on language
-        if (languageCode === 'fr') {
-            setVerificationType('email');
-        } else {
-            setVerificationType('sms');
+        // For now, directly change language without verification
+        // Remove verification requirement for better UX
+        try {
+            i18n.changeLanguage(languageCode);
+            localStorage.setItem('language', languageCode);
+            
+            // Show success toast
+            setToast({
+                show: true,
+                message: t('language.verificationSuccess', {
+                    language: languages.find(l => l.code === languageCode)?.name
+                }) || `Language changed to ${languages.find(l => l.code === languageCode)?.name}`,
+                type: 'success'
+            });
+        } catch (error) {
+            console.error('Language change error:', error);
+            setToast({
+                show: true,
+                message: 'Failed to change language. Please try again.',
+                type: 'error'
+            });
         }
-
-        setShowVerification(true);
     };
 
     const handleSendOTP = async () => {
