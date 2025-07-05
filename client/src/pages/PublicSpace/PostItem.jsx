@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import moment from 'moment';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(relativeTime);
 import { getApiUrl } from '../../utils/apiConfig';
 import './PostItem.css';
 
@@ -116,7 +119,7 @@ const PostItem = ({ post, currentUser, onPostUpdate }) => {
                     </div>
                     <div className="user-details">
                         <h4 className="user-name">{safePost.userId?.name || 'Unknown User'}</h4>
-                        <span className="post-time">{moment(safePost.createdAt).fromNow()}</span>
+                        <span className="post-time">{dayjs(safePost.createdAt).fromNow()}</span>
                     </div>
                 </div>
             </div>
@@ -193,7 +196,7 @@ const PostItem = ({ post, currentUser, onPostUpdate }) => {
                                 <div className="comment-content">
                                     <div className="comment-header">
                                         <span className="comment-author">{comment.userId?.name || 'Unknown User'}</span>
-                                        <span className="comment-time">{moment(comment.commentedAt).fromNow()}</span>
+                                        <span className="comment-time">{dayjs(comment.commentedAt).fromNow()}</span>
                                     </div>
                                     <p className="comment-text">{comment.content}</p>
                                 </div>

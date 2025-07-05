@@ -2,7 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import moment from "moment"
+import dayjs from "dayjs"
+import relativeTime from "dayjs/plugin/relativeTime"
+
+dayjs.extend(relativeTime)
 
 const Question = ({ question }) => {
     const { t } = useTranslation();
@@ -60,7 +63,7 @@ const Question = ({ question }) => {
                         ))}
                     </div>
                     <p className="display-time">
-                        {t('home.asked')} {moment(question.askedon).fromNow()}
+                        {t('home.asked')} {dayjs(question.askedon).fromNow()}
                         {userId ? (
                             <Link to={`/Users/${userId}`} className="user-link" style={{ color: "#0086d8", marginLeft: "4px" }}>
                                 {question.userposted}

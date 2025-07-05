@@ -1,5 +1,8 @@
 import React from 'react'
-import moment from 'moment'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+
+dayjs.extend(relativeTime)
 import { Link, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Avatar from '../../Comnponent/Avatar/Avatar'
@@ -60,7 +63,7 @@ const Displayanswer = ({ question, handleshare }) => {
                             )}
                         </div>
                         <div>
-                            <p>{t('questions.answered')} {moment(ans.answeredon).fromNow()}</p>
+                            <p>{t('questions.answered')} {dayjs(ans.answeredon).fromNow()}</p>
                             <Link to={`/Users/${ans.userid}`} className='user-limk' style={{ color: "#0086d8" }}>
                                 <Avatar backgroundColor="lightgreen" px="2px" py="2px" borderRadius="2px">
                                     {ans.useranswered.charAt(0).toUpperCase()}

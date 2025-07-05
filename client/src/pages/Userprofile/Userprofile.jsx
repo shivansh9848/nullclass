@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import Leftsidebar from '../../Comnponent/Leftsidebar/Leftsidebar'
 import { useParams, useNavigate } from 'react-router-dom'
-import moment from 'moment'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+
+dayjs.extend(relativeTime)
 import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import Avatar from '../../Comnponent/Avatar/Avatar'
@@ -74,7 +77,7 @@ const Userprofile = ({ slidein }) => {
                                 <div className="user-meta">
                                     <p>
                                         <FontAwesomeIcon icon={faBirthdayCake} /> {t('profile.joined')}{" "}
-                                        {moment(currentprofile?.joinedon).fromNow()}
+                                        {dayjs(currentprofile?.joinedon).fromNow()}
                                     </p>
                                     <p className="user-points">
                                         <FontAwesomeIcon icon={faCoins} /> {currentprofile?.points || 0} {t('profile.points')}

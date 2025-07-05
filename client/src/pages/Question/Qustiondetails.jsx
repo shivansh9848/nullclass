@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
-import moment from 'moment'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+
+dayjs.extend(relativeTime)
 import copy from "copy-to-clipboard"
 import { useTranslation } from 'react-i18next'
 import upvote from "../../assets/sort-up.svg"
@@ -115,7 +118,7 @@ const Qustiondetails = () => {
                                                 )}
                                             </div>
                                             <div>
-                                                <p>{t('questions.asked')} {moment(question.askedon).fromNow()}</p>
+                                                <p>{t('questions.asked')} {dayjs(question.askedon).fromNow()}</p>
                                                 <Link to={`/Users/${question.userid}`} className='user-limk' style={{ color: "#0086d8" }}>
                                                     <Avatar backgroundColor="orange" px="8px" py="5px" borderRadius="4px">
                                                         {question.userposted.charAt(0).toUpperCase()}
