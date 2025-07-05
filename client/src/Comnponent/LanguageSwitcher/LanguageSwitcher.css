@@ -322,7 +322,8 @@
 .error-message {
     background: #fff5f5;
     border: 1px solid #f5c6cb;
-    color: #dc3545 !important; /* Make error text red and visible */
+    color: #dc3545 !important;
+    /* Make error text red and visible */
     padding: 12px;
     border-radius: 8px;
     display: flex;

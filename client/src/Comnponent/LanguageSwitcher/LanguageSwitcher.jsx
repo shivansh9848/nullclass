@@ -43,7 +43,7 @@ const LanguageSwitcher = () => {
         try {
             i18n.changeLanguage(languageCode);
             localStorage.setItem('language', languageCode);
-            
+
             // Show success toast
             setToast({
                 show: true,
