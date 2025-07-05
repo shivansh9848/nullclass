@@ -5,9 +5,9 @@ const postSchema = mongoose.Schema({
   content: { type: String, required: true },
   media: [
     {
-      type: { type: String, enum: ["image", "video"], required: true },
-      url: { type: String, required: true },
-      filename: { type: String, required: true },
+      type: { type: String, enum: ["image", "video"] },
+      url: { type: String },
+      filename: { type: String },
       public_id: { type: String }, // Cloudinary public_id for deletion
     },
   ],

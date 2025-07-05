@@ -67,21 +67,86 @@ export const createPost = async (req, res) => {
       }
     }
 
+    // Initialize empty media array
+    let mediaArray = [];
+
+    // Process media files if they exist and Cloudinary is configured
+    if (req.files && req.files.length > 0) {
+      // Check if Cloudinary is configured
+      if (
+        !process.env.CLOUDINARY_CLOUD_NAME ||
+        !process.env.CLOUDINARY_API_KEY ||
+        !process.env.CLOUDINARY_API_SECRET
+      ) {
+        console.warn("Cloudinary not configured - skipping file uploads");
+        // Continue without files but don't fail
+      } else {
+        try {
+          // Ensure Cloudinary is configured before uploading
+          const cloudinaryConfig = {
+            cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+            api_key: process.env.CLOUDINARY_API_KEY,
+            api_secret: process.env.CLOUDINARY_API_SECRET,
+          };
+
+          // Configure Cloudinary with explicit values
+          cloudinary.config(cloudinaryConfig);
+
+          // Upload files to Cloudinary
+          const uploadPromises = req.files.map((file, index) => {
+            return new Promise((resolve, reject) => {
+              const resourceType = file.mimetype.startsWith("image/")
+                ? "image"
+                : "video";
+
+              cloudinary.uploader
+                .upload_stream(
+                  {
+                    resource_type: resourceType,
+                    folder: "posts",
+                    quality: "auto:good",
+                  },
+                  (error, result) => {
+                    if (error) {
+                      console.error(
+                        `Cloudinary upload error for file ${index + 1}:`,
+                        error
+                      );
+                      reject(error);
+                    } else {
+                      resolve({
+                        type: file.mimetype.startsWith("image/")
+                          ? "image"
+                          : "video",
+                        url: result.secure_url,
+                        filename: result.public_id,
+                        public_id: result.public_id,
+                      });
+                    }
+                  }
+                )
+                .end(file.buffer);
+            });
+          });
+
+          mediaArray = await Promise.all(uploadPromises);
+        } catch (uploadError) {
+          console.error("File upload failed:", uploadError);
+          // Continue without files rather than failing completely
+          mediaArray = [];
+        }
+      }
+    }
+
     const newPost = new Post({
       userId,
       content,
       visibility,
-      media: req.files
-        ? req.files.map((file) => ({
-            type: file.mimetype.startsWith("image/") ? "image" : "video",
-            url: file.path, // Cloudinary URL
-            filename: file.filename || file.public_id, // Cloudinary public_id
-            public_id: file.public_id, // Store Cloudinary public_id for deletion
-          }))
-        : [],
+      media: mediaArray,
     });
 
     const savedPost = await newPost.save();
+
     const populatedPost = await Post.findById(savedPost._id)
       .populate("userId", "name email")
       .populate("comments.userId", "name email")
@@ -89,6 +154,7 @@ export const createPost = async (req, res) => {
 
     res.status(201).json(populatedPost);
   } catch (error) {
+    console.error("Create post error:", error);
     res.status(500).json({ message: error.message });
   }
 };

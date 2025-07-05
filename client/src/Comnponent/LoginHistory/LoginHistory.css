@@ -3,6 +3,8 @@
     margin: 0 auto;
     padding: 20px;
     font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    min-height: 100vh;
 }
 
 .login-history-header {
@@ -11,20 +13,24 @@
 }
 
 .login-history-header h2 {
-    color: #333;
+    color: #1a1a1a;
     margin-bottom: 10px;
+    font-size: 2rem;
+    font-weight: 600;
 }
 
 .login-history-header p {
-    color: #666;
-    font-size: 14px;
+    color: #2c3e50;
+    font-size: 16px;
+    font-weight: 500;
 }
 
 .login-history-loading {
     text-align: center;
     padding: 50px;
     font-size: 18px;
-    color: #666;
+    color: #2c3e50;
+    font-weight: 500;
 }
 
 .error-message {
@@ -42,12 +48,21 @@
     font-size: 18px;
 }
 
+/* Additional improvements for better visibility */
+.login-history-container * {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Enhanced contrast for main content areas */
 .section {
     margin-bottom: 40px;
-    background: #fff;
+    background: #ffffff;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    border: 1px solid #e9ecef;
 }
 
 .section-header {
@@ -61,7 +76,9 @@
 
 .section-header h3 {
     margin: 0;
-    color: #333;
+    color: #1a1a1a;
+    font-size: 1.4rem;
+    font-weight: 600;
 }
 
 .terminate-all-btn {
@@ -91,18 +108,33 @@
     border: 1px solid #e9ecef;
     border-radius: 8px;
     padding: 20px;
-    background: #fff;
+    background: #ffffff !important;
     transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .session-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .session-card.current-session {
     border-color: #007bff;
-    background: #f8f9ff;
+    background: #f8f9ff !important;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
+}
+
+/* Force all text in session cards to be dark */
+.session-card * {
+    color: inherit !important;
+}
+
+.session-card .detail-label {
+    color: #000000 !important;
+}
+
+.session-card .detail-value {
+    color: #000000 !important;
 }
 
 .session-header {
@@ -159,14 +191,17 @@
 }
 
 .detail-label {
-    font-weight: 500;
-    color: #666;
-    font-size: 14px;
+    font-weight: 700 !important;
+    color: #1a1a1a !important;
+    font-size: 15px !important;
+    text-shadow: none !important;
 }
 
 .detail-value {
-    color: #333;
-    font-size: 14px;
+    color: #000000 !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    text-shadow: none !important;
 }
 
 /* History Table */
@@ -182,9 +217,9 @@
     padding: 20px;
     background: #f8f9fa;
     border-bottom: 1px solid #e9ecef;
-    font-weight: 600;
-    color: #333;
-    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a1a;
+    font-size: 15px;
 }
 
 .table-row {
@@ -195,10 +230,12 @@
     border-bottom: 1px solid #f1f1f1;
     align-items: center;
     transition: background-color 0.2s;
+    background-color: #ffffff;
 }
 
 .table-row:hover {
     background-color: #f8f9fa;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .table-row:last-child {
@@ -212,13 +249,15 @@
 }
 
 .time-main {
-    font-size: 14px;
-    color: #333;
+    font-size: 15px;
+    color: #1a1a1a;
+    font-weight: 600;
 }
 
 .time-relative {
-    font-size: 12px;
-    color: #666;
+    font-size: 13px;
+    color: #2c3e50;
+    font-weight: 500;
 }
 
 .device-display {
@@ -228,49 +267,57 @@
 }
 
 .device-name {
-    font-size: 14px;
-    color: #333;
+    font-size: 15px;
+    color: #1a1a1a;
+    font-weight: 600;
 }
 
 .device-type {
-    font-size: 12px;
-    color: #666;
+    font-size: 13px;
+    color: #2c3e50;
     text-transform: capitalize;
+    font-weight: 500;
 }
 
 .ip-address {
     font-family: monospace;
-    font-size: 13px;
-    color: #333;
+    font-size: 14px;
+    color: #1a1a1a;
+    font-weight: 600;
 }
 
 .status-badge {
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    border: 1px solid;
 }
 
 .status-badge.success {
     background: #d4edda;
     color: #155724;
+    border-color: #c3e6cb;
 }
 
 .status-badge.failed {
     background: #f8d7da;
     color: #721c24;
+    border-color: #f5c6cb;
 }
 
 .status-badge.otp {
     background: #fff3cd;
     color: #856404;
+    border-color: #ffeaa7;
 }
 
 .status-badge.restricted {
     background: #f0f0f0;
     color: #495057;
+    border-color: #dee2e6;
 }
 
 .login-details {
@@ -282,26 +329,76 @@
 .detail-tag {
     background: #e9ecef;
     color: #495057;
-    padding: 2px 6px;
-    border-radius: 3px;
-    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
     width: fit-content;
+    font-weight: 600;
+    border: 1px solid #dee2e6;
 }
 
 .detail-tag.verified {
     background: #d4edda;
     color: #155724;
+    border-color: #c3e6cb;
 }
 
 .logout-time {
-    font-size: 12px;
-    color: #666;
+    font-size: 13px;
+    color: #2c3e50;
+    font-weight: 500;
 }
 
 .no-history {
     text-align: center;
     padding: 40px;
-    color: #666;
+    color: #2c3e50;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* Force maximum contrast for session details - Override all other styles */
+.session-details .detail-item .detail-label,
+.session-details .detail-item .detail-value {
+    color: #000000 !important;
+    font-weight: 700 !important;
+    text-shadow: none !important;
+    opacity: 1 !important;
+}
+
+/* Ensure session cards always have high contrast */
+.sessions-grid .session-card {
+    background: #ffffff !important;
+    color: #000000 !important;
+}
+
+.sessions-grid .session-card * {
+    color: #000000 !important;
+}
+
+/* Override any inherited dark text */
+.session-header .device-info,
+.session-header .device-info *,
+.session-details,
+.session-details * {
+    color: #000000 !important;
+    font-weight: 600 !important;
+}
+
+/* Make sure current badge is visible */
+.current-badge {
+    background: #28a745 !important;
+    color: #ffffff !important;
+    padding: 4px 10px !important;
+    border-radius: 12px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    margin-left: 10px !important;
+}
+
+/* Force device info to be dark */
+.device-info .device-icon {
+    color: #000000 !important;
 }
 
 /* Responsive Design */
@@ -385,13 +482,27 @@
     }
 
     .session-card {
-        background: #2d2d2d;
-        border-color: #555;
+        background: #f5f5f5 !important;
+        border-color: #333;
+        color: #000000 !important;
+    }
+
+    .session-card * {
+        color: #000000 !important;
+    }
+
+    .session-card .detail-label {
+        color: #000000 !important;
+    }
+
+    .session-card .detail-value {
+        color: #000000 !important;
     }
 
     .session-card.current-session {
-        background: #1a1a2e;
+        background: #e6f3ff !important;
         border-color: #007bff;
+        color: #000000 !important;
     }
 
     .table-header {
