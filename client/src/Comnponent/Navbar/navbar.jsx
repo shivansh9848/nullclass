@@ -16,6 +16,7 @@ function Navbar({ handleslidein }) {
     const { t } = useTranslation();
     var User = useSelector((state) => state.currentuserreducer)
     const [showMobileSearch, setShowMobileSearch] = useState(false)
+    const [forceUpdate, setForceUpdate] = useState(0) // Add force update state
     const navigate = useNavigate()
     const dispatch = useDispatch();
 
@@ -35,25 +36,39 @@ function Navbar({ handleslidein }) {
                     return;
                 }
             }
+        } catch (error) {
+            console.error("Error in token validation:", error);
+            handlelogout();
+        }
+    }, [User, forceUpdate]); // Added forceUpdate dependency
 
-            // Safely handle localStorage
+    // Force re-render when localStorage changes
+    useEffect(() => {
+        const handleStorageChange = () => {
+            setForceUpdate(prev => prev + 1);
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+
+        // Also check for Profile changes in localStorage periodically
+        const interval = setInterval(() => {
             const profile = localStorage.getItem("Profile");
-            if (profile) {
+            if (profile && !User) {
                 try {
                     const parsedProfile = JSON.parse(profile);
                     dispatch(setcurrentuser(parsedProfile));
+                    setForceUpdate(prev => prev + 1);
                 } catch (error) {
-                    console.error("Error parsing profile from localStorage:", error);
-                    // Clear corrupted data
-                    localStorage.removeItem("Profile");
-                    dispatch(setcurrentuser(null));
+                    console.error("Error parsing profile:", error);
                 }
             }
-        } catch (error) {
-            console.error("Error in user authentication check:", error);
-            handlelogout();
-        }
-    }, [User?.token, dispatch]);
+        }, 500);
+
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+            clearInterval(interval);
+        };
+    }, [User, dispatch]);
 
     return (
         <>

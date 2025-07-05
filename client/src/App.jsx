@@ -6,6 +6,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Allroutes from "./Allroutes";
 import { useDispatch } from "react-redux";
 import { fetchallquestion } from "./action/question";
+import { setcurrentuser } from "./action/currentuser";
 import MobileOverlay from "./Comnponent/MobileOverlay/MobileOverlay.jsx";
 import "./i18n"; // Import i18n configuration
 
@@ -14,6 +15,18 @@ function App() {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        // Initialize user from localStorage on app start
+        const profile = localStorage.getItem("Profile");
+        if (profile) {
+            try {
+                const parsedProfile = JSON.parse(profile);
+                dispatch(setcurrentuser(parsedProfile));
+            } catch (error) {
+                console.error("Error parsing profile from localStorage:", error);
+                localStorage.removeItem("Profile");
+            }
+        }
+
         dispatch(fetchallusers());
         dispatch(fetchallquestion());
     }, [dispatch]);

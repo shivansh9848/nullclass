@@ -58,22 +58,13 @@
 
 .auth-container-2 form label:nth-child(1) h4,
 .auth-container-2 form label:nth-child(2) h4,
-.auth-container-2 form label:nth-child(3) h4 {
+.auth-container-2 form label:nth-child(3) h4,
+.auth-container-2 form label:nth-child(4) h4 {
     margin-bottom: 5px;
     margin-top: 10px;
 }
 
-.auth-container-2 form label:nth-child(4) {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.auth-container-2 form label:nth-child(4) input {
-    width: 20px;
-    height: 20px;
-    margin: 0;
-}
+/* Removed the problematic checkbox styling for password field */
 
 .auth-btn {
     margin-top: 10px;
