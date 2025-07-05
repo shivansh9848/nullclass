@@ -5,17 +5,33 @@
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "build"
+        "distDir": "dist"
       }
     }
   ],
   "routes": [
     {
-      "src": "/static/(.*)",
+      "src": "/favicon.ico",
+      "dest": "/favicon.ico"
+    },
+    {
+      "src": "/manifest.json",
+      "dest": "/manifest.json"
+    },
+    {
+      "src": "/robots.txt",
+      "dest": "/robots.txt"
+    },
+    {
+      "src": "/assets/(.*)",
       "headers": {
         "cache-control": "s-maxage=31536000,immutable"
       },
-      "dest": "/static/$1"
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/locales/(.*)",
+      "dest": "/locales/$1"
     },
     {
       "src": "/(.*)",
@@ -23,6 +39,6 @@
     }
   ],
   "env": {
-    "REACT_APP_API_URL": "https://nullclass-kuom.onrender.com"
+    "VITE_API_URL": "https://nullclass-kuom.onrender.com"
   }
 }
